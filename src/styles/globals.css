@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: #E8F5E9;
+  color: #4CAF50;
+}
+
+button {
+  font-family: 'Lato', sans-serif;
+}
