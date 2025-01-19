@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaEdit } from 'react-icons/fa';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 interface TableProps {
   data: Array<{
@@ -12,27 +12,24 @@ interface TableProps {
     is_delivery_available?: boolean;
   }>;
   onEdit: (item: any) => void;
+  onDelete: (item: any) => void;
 }
 
-export default function Table({ data, onEdit }: TableProps) {
+export default function ProductTable({ data, onEdit, onDelete }: TableProps) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  const handleEditClick = (item: {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    min_order: number;
-    max_order: number;
-    is_delivery_available?: boolean;
-  }) => {
+  const handleEditClick = (item) => {
     if (!isClient) return;
+    onEdit(item);
+  };
 
-    onEdit(item)
+  const handleDeleteClick = (item) => {
+    if (!isClient) return;
+    onDelete(item);
   };
 
   if (!isClient) return null;
@@ -48,6 +45,7 @@ export default function Table({ data, onEdit }: TableProps) {
             <th className="px-6 py-4 text-right">Min Order</th>
             <th className="px-6 py-4 text-right">Max Order</th>
             <th className="px-6 py-4 text-left">Edit</th>
+            <th className="px-6 py-4 text-left">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -61,15 +59,21 @@ export default function Table({ data, onEdit }: TableProps) {
                 <td className="px-6 py-4 text-right">{item.max_order}</td>
                 <td className="px-6 py-4">
                   <FaEdit
-                    onClick={() => { handleEditClick(item) }}
+                    onClick={() => handleEditClick(item)}
                     className="text-green-600 hover:text-green-700 cursor-pointer"
+                  />
+                </td>
+                <td className="px-6 py-4">
+                  <FaTrash
+                    onClick={() => handleDeleteClick(item)}
+                    className="text-red-600 hover:text-red-700 cursor-pointer"
                   />
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={5} className="text-center px-6 py-8 text-gray-500">
+              <td colSpan={7} className="text-center px-6 py-8 text-gray-500">
                 No products found.
               </td>
             </tr>
