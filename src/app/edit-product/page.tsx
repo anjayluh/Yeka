@@ -68,7 +68,7 @@ export default function EditProduct() {
       await updateDoc(productRef, product);
 
       console.log('Product updated successfully:', product);
-      router.push('/admin');
+      router.push('/');
     } catch (error) {
       console.error('Error updating product:', error);
     }

@@ -32,6 +32,7 @@ const ProductForm = ({
   submitButtonText,
 }: ProductFormProps) => {
   const [product, setProduct] = useState(initialData);
+  const router = useRouter(); // Hook to handle navigation
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -48,6 +49,10 @@ const ProductForm = ({
       return;
     }
     onSubmit(product);
+  };
+
+  const handleCancel = () => {
+    router.back(); // Goes back to the previous page
   };
 
   return (
@@ -149,12 +154,22 @@ const ProductForm = ({
           </label>
         </div>
 
-        <button
-          type="submit"
-          className="w-full py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
-        >
-          {submitButtonText}
-        </button>
+        <div className="flex justify-between space-x-4">
+          <button
+            type="submit"
+            className="w-full py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+          >
+            {submitButtonText}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="w-full py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );
