@@ -1,9 +1,9 @@
 'use client';
 
 import { addDoc, collection } from 'firebase/firestore';
-import { db } from '@/utils/firebase'; // Adjust based on your firebase.ts location
+import { db } from '@/utils/firebase';
 import { useRouter } from 'next/navigation';
-import ProductForm from '@/components/ProductForm'; // Import the reusable form
+import ProductForm from '@/components/ProductForm';
 
 export default function AddProduct() {
   const router = useRouter();

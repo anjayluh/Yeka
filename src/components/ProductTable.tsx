@@ -18,7 +18,7 @@ export default function Table({ data, onEdit }: TableProps) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true); // Ensure client-side rendering
+    setIsClient(true);
   }, []);
 
   const handleEditClick = (item: {

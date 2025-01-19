@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { db } from '@/utils/firebase'; // Adjust the import to match your Firebase config file
+import { db } from '@/utils/firebase';
 import ProductForm from '@/components/ProductForm';
 import Spinner from '@/components/Spinner';
 
