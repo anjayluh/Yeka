@@ -4,11 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-interface NavBarProps {
-    menuItems: { label: string; href: string }[];
-}
+export const menuItems = [
+    { label: 'Products', href: '/' },
+    { label: 'Contacts', href: '/contacts' },
+    { label: 'Training Programs', href: '/training-programs' },
+    { label: 'Blogs', href: '/blogs' },
+];
 
-export default function NavBar({ menuItems }: NavBarProps) {
+export default function NavBar() {
     const pathname = usePathname();
 
     return (

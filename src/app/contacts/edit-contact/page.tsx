@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
 import ContactForm from '@/components/ContactForm';
-import Spinner from '@/components/Spinner';
+import Spinner from '@/components/shared/Spinner';
 
 export default function EditContact() {
   const router = useRouter();

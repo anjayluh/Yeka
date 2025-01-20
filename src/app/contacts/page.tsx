@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
-import Spinner from '@/components/Spinner';
+import Spinner from '@/components/shared/Spinner';
 import ContactTable from '@/components/ContactTable';
-import NavBar from '@/components/NavBar';
+import NavBar from '@/components/shared/NavBar';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -15,12 +15,6 @@ export default function AdminDashboard() {
     const [loading, setLoading] = useState(true);
     const [selectedContact, setSelectedContact] = useState(null);
     const [showModal, setShowModal] = useState(false);
-
-    const menuItems = [
-        { label: 'Products', href: '/' },
-        { label: 'Contacts', href: '/contacts' },
-        { label: 'Training Programs', href: '/training-programs' },
-    ];
 
     useEffect(() => {
         const fetchContacts = async () => {
@@ -69,7 +63,7 @@ export default function AdminDashboard() {
 
     return (
         <div className="flex min-h-screen">
-            <NavBar menuItems={menuItems} />
+            <NavBar />
 
             <div className="flex-1 p-8 bg-gray-50">
                 <header className="flex justify-between items-center mb-8">

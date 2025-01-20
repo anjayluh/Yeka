@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
 import ProductForm from '@/components/ProductForm';
-import Spinner from '@/components/Spinner';
+import Spinner from '@/components/shared/Spinner';
 
 export default function EditProduct() {
   const router = useRouter();
