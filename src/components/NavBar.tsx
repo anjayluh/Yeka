@@ -13,18 +13,17 @@ export default function NavBar({ menuItems }: NavBarProps) {
 
     return (
         <nav className="w-64 bg-gray-800 text-white">
-            <div className="p-6 flex flex-col items-center">
-                <div className="mb-6">
+            <div className="p-6 flex flex-col">
+                <div className="mb-4 ml-2">
                     <Image
                         src="/images/logo.png"
                         alt="Logo"
-                        width={50}
-                        height={50}
+                        width={100}
+                        height={100}
                         className="object-contain"
                     />
                 </div>
 
-                {/* Menu Items */}
                 <ul className="w-full">
                     {menuItems.map((item, index) => (
                         <li key={index} className="mb-2">
