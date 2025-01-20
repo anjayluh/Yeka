@@ -14,7 +14,7 @@ interface ContactFormProps {
   submitButtonText: string;
 }
 
-const ProductForm = ({
+const ContactForm = ({
   initialData = {
     name: '',
     email: '',
@@ -138,4 +138,4 @@ const ProductForm = ({
   );
 };
 
-export default ProductForm;
+export default ContactForm;

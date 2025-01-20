@@ -69,7 +69,7 @@ const ProductForm = ({
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-  <div className="w-[90%] p-6 max-w-lg bg-white rounded-lg shadow-md">
+      <div className="w-[90%] p-6 max-w-lg bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold mb-4">{formTitle}</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -91,14 +91,15 @@ const ProductForm = ({
             <label htmlFor="description" className="block text-sm font-medium text-gray-700">
               Description
             </label>
-            <input
+            <textarea
               id="description"
-              type="text"
               name="description"
               value={product.description}
               onChange={handleInputChange}
               placeholder="Description"
               className="w-full p-2 border border-gray-300 rounded-md"
+              rows={4}
+              aria-label="Description"
             />
           </div>
 
@@ -172,11 +173,10 @@ const ProductForm = ({
           <div className="flex justify-between space-x-4">
             <button
               type="submit"
-              className={`w-full py-2 text-white rounded-md hover:bg-green-700 ${
-                isFormChanged
+              className={`w-full py-2 text-white rounded-md hover:bg-green-700 ${isFormChanged
                   ? 'bg-green-600'
                   : 'bg-gray-200 cursor-not-allowed hover:bg-gray-200'
-              }`}
+                }`}
               disabled={!isFormChanged}
             >
               {submitButtonText}
