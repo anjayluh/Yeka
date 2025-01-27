@@ -25,7 +25,7 @@ export default function AddProduct() {
 
     try {
       await addDoc(collection(db, 'Products'), productData);
-      router.push('/');
+      router.push('/admin');
     } catch (error) {
       console.error('Error adding product:', error);
     }

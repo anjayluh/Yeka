@@ -23,7 +23,7 @@ export default function AddTrainingProgram() {
 
     try {
       await addDoc(collection(db, 'Training Programs'), programData);
-      router.push('/training-programs');
+      router.push('/admin/training-programs');
     } catch (error) {
       console.error('Error adding program:', error);
     }

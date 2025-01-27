@@ -11,3 +11,18 @@ body {
 button {
   font-family: 'Lato', sans-serif;
 }
+
+.scrolling-container {
+  -webkit-overflow-scrolling: touch;
+  overflow-x: scroll;
+  padding-bottom: 1rem; /* to give space for scrolling */
+}
+
+.scrolling-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scrolling-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}

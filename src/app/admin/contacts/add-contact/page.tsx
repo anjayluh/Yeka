@@ -22,7 +22,7 @@ export default function AddContact() {
 
     try {
       await addDoc(collection(db, 'Contacts'), contactData);
-      router.push('/contacts');
+      router.push('/admin/contacts');
     } catch (error) {
       console.error('Error adding contact:', error);
     }

@@ -62,7 +62,7 @@ export default function EditContact() {
       await updateDoc(contactRef, contact);
 
       console.log('Contact updated successfully:', contact);
-      router.push('/contacts');
+      router.push('/admin/contacts');
     } catch (error) {
       console.error('Error updating contact:', error);
     }

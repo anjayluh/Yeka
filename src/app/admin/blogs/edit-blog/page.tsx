@@ -59,7 +59,7 @@ export default function EditBlog() {
       const blogRef = doc(db, 'Blogs', blogId);
       await updateDoc(blogRef, blog);
 
-      router.push('/blogs');
+      router.push('/admin/blogs');
     } catch (error) {
       console.error('Error updating blog:', error);
     }

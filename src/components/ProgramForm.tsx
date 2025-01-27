@@ -119,6 +119,22 @@ const ProgramForm = ({
             />
           </div>
 
+          <div className="mb-4">
+            <label htmlFor="activities" className="block text-sm font-medium text-gray-700">
+              Activities
+            </label>
+            <textarea
+              id="activities"
+              name="activities"
+              value={program.activities}
+              onChange={handleInputChange}
+              placeholder="Activities"
+              className="w-full p-2 border border-gray-300 rounded-md"
+              rows={4}
+              aria-label="Activities"
+            />
+          </div>
+
 
           <div className="mb-4">
             <label htmlFor="bonus_materials" className="block text-sm font-medium text-gray-700">

@@ -67,7 +67,7 @@ export default function EditProgram() {
       const programRef = doc(db, 'Training Programs', programId);
       await updateDoc(programRef, program);
 
-      router.push('/training-programs');
+      router.push('/admin/training-programs');
     } catch (error) {
       console.error('Error updating program:', error);
     }

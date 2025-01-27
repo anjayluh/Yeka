@@ -19,7 +19,7 @@ export default function AddBlog() {
 
     try {
       await addDoc(collection(db, 'Blogs'), blogData);
-      router.push('/blogs');
+      router.push('/admin/blogs');
     } catch (error) {
       console.error('Error adding blog:', error);
     }
