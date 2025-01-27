@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 export const menuItems = [
-    { label: 'Products', href: '/' },
-    { label: 'Contacts', href: '/contacts' },
-    { label: 'Training Programs', href: '/training-programs' },
-    { label: 'Blogs', href: '/blogs' },
+    { label: 'Products', href: '/admin' },
+    { label: 'Contacts', href: '/admin/contacts' },
+    { label: 'Training Programs', href: '/admin/training-programs' },
+    { label: 'Blogs', href: '/admin/blogs' },
 ];
 
 export default function NavBar() {

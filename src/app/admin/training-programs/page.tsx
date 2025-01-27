@@ -37,7 +37,7 @@ export default function AdminDashboard() {
     }, []);
 
     const handleEdit = (program) => {
-        const url = `/training-programs/edit-training-program?id=${program.id}`;
+        const url = `/admin/training-programs/edit-training-program?id=${program.id}`;
         router.push(url);
     };
 
@@ -69,7 +69,7 @@ export default function AdminDashboard() {
             <div className="flex-1 p-8 bg-gray-50">
                 <header className="flex justify-between items-center mb-8">
                     <h1 className="text-4xl font-bold text-gray-800">Training Programs</h1>
-                    <Link href="/training-programs/add-training-program">
+                    <Link href="/admin/training-programs/add-training-program">
                         <button className="px-4 py-2 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700">
                             Add Training Program
                         </button>

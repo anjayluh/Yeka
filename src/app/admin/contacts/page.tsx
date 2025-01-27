@@ -36,7 +36,7 @@ export default function AdminDashboard() {
     }, []);
 
     const handleEdit = (contact) => {
-        const url = `/contacts/edit-contact?id=${contact.id}`;
+        const url = `/admin/contacts/edit-contact?id=${contact.id}`;
         router.push(url);
     };
 
@@ -68,7 +68,7 @@ export default function AdminDashboard() {
             <div className="flex-1 p-8 bg-gray-50">
                 <header className="flex justify-between items-center mb-8">
                     <h1 className="text-4xl font-bold text-gray-800">Contacts</h1>
-                    <Link href="/contacts/add-contact">
+                    <Link href="/admin/contacts/add-contact">
                         <button className="px-4 py-2 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700">
                             Add Contact
                         </button>
