@@ -10,7 +10,6 @@ import Slider from 'react-slick';
 import { Link as ScrollLink } from 'react-scroll';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Spinner from '@/components/shared/Spinner';
 
 export default function HomePage() {
   const sliderSettings = {
@@ -176,7 +175,7 @@ export default function HomePage() {
 
           {/* Navigation */}
           <nav className={`lg:flex gap-6 ${isMenuOpen ? 'flex flex-col absolute top-20 right-6 bg-green-700 w-full py-6' : 'hidden lg:flex'}`}>
-            {['Home', 'About', 'Service', 'Client', 'Blog', 'Contact Us'].map((item, index) => (
+            {['Home', 'About', 'Services', 'Client', 'Blog', 'Contact Us'].map((item, index) => (
               <a
                 key={index}
                 href={`#${item.toLowerCase().replace(' ', '-')}`}
@@ -191,7 +190,7 @@ export default function HomePage() {
       </header>
 
       {/* Slider Section */}
-      <section className="w-full h-[500px] relative">
+      <section id='about' className="w-full h-[500px] relative">
         <Slider {...sliderSettings}>
           {images.map((img, index) => (
             <div key={index} className="w-full h-[500px]">
