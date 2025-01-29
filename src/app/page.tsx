@@ -44,15 +44,20 @@ export default function HomePage() {
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [programs, setPrograms] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [programsLoading, setProgramsLoading] = useState(true);
+  const [blogsLoading, setBlogsLoading] = useState(true);
   const [selectedProgram, setSelectedProgram] = useState<any | null>(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const [serviceScrollPosition, setServiceScrollPosition] = useState(0);
   const servicesContainerRef = useRef<HTMLDivElement>(null);
+  const [blogScrollPosition, setBlogScrollPosition] = useState(0);
+  const blogContainerRef = useRef<HTMLDivElement>(null);
   const [animatedNumbers, setAnimatedNumbers] = useState({
     experience: 0,
     customers: 0,
     awards: 0,
   });
+
+  const [blogs, setBlogs] = useState<any[]>([]);
 
   const targetNumbers = {
     experience: 25,
@@ -79,16 +84,36 @@ export default function HomePage() {
       } catch (error) {
         console.error('Error fetching programs:', error);
       } finally {
-        setLoading(false);
+        setProgramsLoading(false);
+      }
+    };
+
+    const fetchBlogs = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'Blogs'));
+        const blogsData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setBlogs(blogsData);
+      } catch (error) {
+        console.error('Error fetching blogs:', error);
+      } finally {
+        setBlogsLoading(false);
       }
     };
 
     fetchTrainingPrograms();
+    fetchBlogs();
   }, []);
 
 
   const handleProgramClick = (program: any) => {
     setSelectedProgram(program);
+  };
+
+  const handleBlogClick = (blog: any) => {
+    setSelectedProgram(blog);
   };
 
   const handleClosePopup = () => {
@@ -99,19 +124,39 @@ export default function HomePage() {
   useEffect(() => {
     const container = servicesContainerRef.current;
     if (container) {
-      container.scrollLeft = scrollPosition;
+      container.scrollLeft = serviceScrollPosition;
     }
-  }, [scrollPosition]);
+  }, [serviceScrollPosition]);
 
-  const handleScroll = (direction: 'left' | 'right') => {
+  useEffect(() => {
+    const container = blogContainerRef.current;
+    if (container) {
+      container.scrollLeft = blogScrollPosition;
+    }
+  }, [blogScrollPosition]);
+
+  const handleProgramScroll = (direction: 'left' | 'right') => {
     const container = servicesContainerRef.current;
     if (container) {
       const scrollAmount = 264;
       const newScrollPosition =
         direction === 'left'
-          ? Math.max(0, scrollPosition - scrollAmount)
-          : scrollPosition + scrollAmount;
-      setScrollPosition(newScrollPosition);
+          ? Math.max(0, serviceScrollPosition - scrollAmount)
+          : serviceScrollPosition + scrollAmount;
+      setServiceScrollPosition(newScrollPosition);
+      container.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
+    }
+  };
+
+  const handleBlogScroll = (direction: 'left' | 'right') => {
+    const container = blogContainerRef.current;
+    if (container) {
+      const scrollAmount = 264;
+      const newScrollPosition =
+        direction === 'left'
+          ? Math.max(0, blogScrollPosition - scrollAmount)
+          : blogScrollPosition + scrollAmount;
+      setServiceScrollPosition(newScrollPosition);
       container.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
     }
   };
@@ -147,9 +192,13 @@ export default function HomePage() {
     });
   }, []);
 
-  const isLeftArrowDisabled = scrollPosition <= 0;
-  const isRightArrowDisabled =
-    programs.length < 5 || scrollPosition >= (programs.length - 4) * 264;
+  const isServiceLeftArrowDisabled = serviceScrollPosition <= 0;
+  const isServiceRightArrowDisabled =
+    programs.length < 5 || serviceScrollPosition >= (programs.length - 4) * 264;
+
+  const isBlogLeftArrowDisabled = blogScrollPosition <= 0;
+  const isBlogRightArrowDisabled =
+    programs.length < 5 || blogScrollPosition >= (programs.length - 4) * 264;
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-green-100 via-white to-green-50 home-page">
@@ -253,7 +302,7 @@ export default function HomePage() {
       <section id="services" className="bg-green-50 py-12">
         <div className="container mx-auto scrollbar-thin scrollbar-thumb-green-700">
           <h2 className="text-3xl font-bold text-center text-green-700">Our Services</h2>
-          {loading ?
+          {programsLoading ?
             <div className="flex justify-center items-center py-12">
               <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full"></div>
             </div>
@@ -261,9 +310,9 @@ export default function HomePage() {
             <div className="mt-8 relative">
               <div className="flex justify-center">
                 <button
-                  onClick={() => handleScroll('left')}
-                  disabled={isLeftArrowDisabled}
-                  className={`absolute left-0 top-1/2 transform -translate-y-1/2 bg-green-700 text-white px-2 py-1 rounded-full z-10 ${isLeftArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-800'
+                  onClick={() => handleProgramScroll('left')}
+                  disabled={isServiceLeftArrowDisabled}
+                  className={`absolute left-0 top-1/2 transform -translate-y-1/2 bg-green-700 text-white px-2 py-1 rounded-full z-10 ${isServiceLeftArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-800'
                     }`}
                 >
                   &larr;
@@ -294,9 +343,9 @@ export default function HomePage() {
                   ))}
                 </div>
                 <button
-                  onClick={() => handleScroll('right')}
-                  disabled={isRightArrowDisabled}
-                  className={`absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-700 text-white px-2 py-1 rounded-full z-10 ${isRightArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-800'
+                  onClick={() => handleProgramScroll('right')}
+                  disabled={isServiceRightArrowDisabled}
+                  className={`absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-700 text-white px-2 py-1 rounded-full z-10 ${isServiceRightArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-800'
                     }`}
                 >
                   &rarr;
@@ -338,6 +387,60 @@ export default function HomePage() {
           </div>
         </div>
       )}
+
+      {/* Blogs Section */}
+      <section id="blog" className="bg-green-100 py-12">
+        <div className="container mx-auto mb-2">
+          <h2 className="text-3xl font-bold text-center text-green-700">Latest Blog Posts</h2>
+
+          {blogsLoading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full"></div>
+            </div>
+          ) : (
+            <div className="relative mt-8">
+              <div className="flex justify-center">
+                <button
+                  onClick={() => handleBlogScroll('left')}
+                  disabled={isBlogLeftArrowDisabled}
+                  className={`absolute left-0 top-1/2 transform -translate-y-1/2 bg-green-700 text-white px-2 py-1 rounded-full z-10 ${isBlogLeftArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-800'}`}
+                >
+                  &larr;
+                </button>
+                <div
+                  ref={blogContainerRef}
+                  className="flex overflow-x-auto gap-8 max-w-4xl mx-auto scrollbar-thin scrollbar-thumb-green-700 scrollbar-track-green-200"
+                >
+                  {blogs.map((blog) => (
+                    <div
+                      key={blog.id}
+                      className="p-6 bg-white shadow-md rounded-md hover:shadow-lg transition w-64 flex-shrink-0"
+                      onClick={() => handleBlogClick(blog)}
+                    >
+                      <h3 className="text-lg font-bold text-green-700">{blog.title}</h3>
+                      <ScrollLink
+                      href={blog.link}
+                        smooth
+                        duration={500}
+                        className="text-green-500 mt-4 inline-block hover:underline cursor-pointer"
+                      >
+                        Read More
+                      </ScrollLink>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={() => handleBlogScroll('right')}
+                  disabled={isBlogRightArrowDisabled}
+                  className={`absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-700 text-white px-2 py-1 rounded-full z-10 ${isBlogRightArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-800'}`}
+                >
+                  &rarr;
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* Contact Form Section */}
       <section id="contact-us" className="container mx-auto py-12">
