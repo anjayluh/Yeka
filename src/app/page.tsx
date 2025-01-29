@@ -1,14 +1,15 @@
+
 'use client';
 
-import { useState, useEffect } from 'react';
-import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { useState, useEffect, useRef } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
 import Image from 'next/image';
 import Slider from 'react-slick';
 import { Link as ScrollLink } from 'react-scroll';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
+import Spinner from '@/components/shared/Spinner';
 
 export default function HomePage() {
   const sliderSettings = {
@@ -41,9 +42,12 @@ export default function HomePage() {
     },
   ];
 
-  const [currentSlide, setCurrentSlide] = useState(0); const [programs, setPrograms] = useState<any[]>([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [programs, setPrograms] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProgram, setSelectedProgram] = useState<any | null>(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const servicesContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchTrainingPrograms = async () => {
@@ -64,6 +68,7 @@ export default function HomePage() {
     fetchTrainingPrograms();
   }, []);
 
+
   const handleProgramClick = (program: any) => {
     setSelectedProgram(program);
   };
@@ -72,6 +77,30 @@ export default function HomePage() {
     setSelectedProgram(null);
   };
 
+
+  useEffect(() => {
+    const container = servicesContainerRef.current;
+    if (container) {
+      container.scrollLeft = scrollPosition;
+    }
+  }, [scrollPosition]);
+
+  const handleScroll = (direction: 'left' | 'right') => {
+    const container = servicesContainerRef.current;
+    if (container) {
+      const scrollAmount = 264;
+      const newScrollPosition =
+        direction === 'left'
+          ? Math.max(0, scrollPosition - scrollAmount)
+          : scrollPosition + scrollAmount;
+      setScrollPosition(newScrollPosition);
+      container.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
+    }
+  };
+
+  const isLeftArrowDisabled = scrollPosition <= 0;
+  const isRightArrowDisabled =
+    programs.length < 5 || scrollPosition >= (programs.length - 4) * 264;
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-green-100 via-white to-green-50">
@@ -159,34 +188,61 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
+
       <section id="services" className="bg-green-50 py-12">
-        <div className="container mx-auto">
+        <div className="container mx-auto scrollbar-thin scrollbar-thumb-green-700">
           <h2 className="text-3xl font-bold text-center text-green-700">Our Services</h2>
-          <div
-            className={`mt-8 flex overflow-x-auto gap-8 ${programs.length > 4 ? 'scrolling-container' : ''
-              }`}
-          >
-            {programs.map((program) => (
-              <div
-                key={program.id}
-                className="p-6 bg-white shadow-md rounded-md hover:shadow-lg transition w-64 flex flex-col"
-                onClick={() => handleProgramClick(program)}
-              >
-                <h3 className="text-lg font-bold text-green-700 flex-grow">{program.mode}</h3>
-                <p className="mt-2 text-gray-600 flex-grow">
-                  {program.description.split(' ').slice(0, 10).join(' ')}...
-                </p>
-                <ScrollLink
-                  onClick={() => handleProgramClick(program)}
-                  smooth
-                  duration={500}
-                  className="text-green-500 mt-4 inline-block hover:underline cursor-pointer"
-                >
-                  Read More
-                </ScrollLink>
-              </div>
-            ))}
+          {loading ?
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full"></div>
           </div>
+            :
+            <div className="mt-8 relative">
+              <div className="flex justify-center">
+                <button
+                  onClick={() => handleScroll('left')}
+                  disabled={isLeftArrowDisabled}
+                  className={`absolute left-0 top-1/2 transform -translate-y-1/2 bg-green-700 text-white px-2 py-1 rounded-full z-10 ${isLeftArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-800'
+                    }`}
+                >
+                  &larr;
+                </button>
+                <div
+                  ref={servicesContainerRef}
+                  className="flex overflow-x-auto gap-8 max-w-4xl mx-auto"
+                >
+                  {programs.map((program) => (
+                    <div
+                      key={program.id}
+                      className="p-6 bg-white shadow-md rounded-md hover:shadow-lg transition w-64 flex-shrink-0"
+                      onClick={() => handleProgramClick(program)}
+                    >
+                      <h3 className="text-lg font-bold text-green-700">{program.mode}</h3>
+                      <p className="mt-2 text-gray-600">
+                        {program.description.split(' ').slice(0, 10).join(' ')}...
+                      </p>
+                      <ScrollLink
+                        onClick={() => handleProgramClick(program)}
+                        smooth
+                        duration={500}
+                        className="text-green-500 mt-4 inline-block hover:underline cursor-pointer"
+                      >
+                        Read More
+                      </ScrollLink>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={() => handleScroll('right')}
+                  disabled={isRightArrowDisabled}
+                  className={`absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-700 text-white px-2 py-1 rounded-full z-10 ${isRightArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-800'
+                    }`}
+                >
+                  &rarr;
+                </button>
+              </div>
+            </div>
+          }
         </div>
       </section>
 
