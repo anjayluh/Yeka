@@ -63,12 +63,14 @@ export default function BlogTable({ data, onEdit, onDelete }: TableProps) {
                   <FaEdit
                     onClick={() => handleEditClick(item)}
                     className="text-green-600 hover:text-green-700 cursor-pointer"
+                    title="Edit blog"
                   />
                 </td>
                 <td className="px-6 py-4">
                   <FaTrash
                     onClick={() => handleDeleteClick(item)}
                     className="text-red-600 hover:text-red-700 cursor-pointer"
+                    title="Delete blog"
                   />
                 </td>
               </tr>
@@ -113,12 +115,14 @@ export default function BlogTable({ data, onEdit, onDelete }: TableProps) {
                 <button
                   onClick={() => handleEditClick(item)}
                   className="text-green-600 hover:text-green-700"
+                  title="Edit blog"
                 >
                   <FaEdit />
                 </button>
                 <button
                   onClick={() => handleDeleteClick(item)}
                   className="text-red-600 hover:text-red-700"
+                  title="Delete blog"
                 >
                   <FaTrash />
                 </button>

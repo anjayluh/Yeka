@@ -61,10 +61,12 @@ export default function ProductTable({ data, onEdit, onDelete }: TableProps) {
                   <FaEdit
                     onClick={() => handleEditClick(item)}
                     className="text-green-600 hover:text-green-700 cursor-pointer"
+                    title="Edit product"
                   />
                   <FaTrash
                     onClick={() => handleDeleteClick(item)}
                     className="text-red-600 hover:text-red-700 cursor-pointer"
+                    title="Delete product"
                   />
                 </td>
               </tr>
@@ -108,12 +110,14 @@ export default function ProductTable({ data, onEdit, onDelete }: TableProps) {
                 <button
                   onClick={() => handleEditClick(item)}
                   className="text-green-600 hover:text-green-700"
+                    title="Edit product"
                 >
                   <FaEdit />
                 </button>
                 <button
                   onClick={() => handleDeleteClick(item)}
                   className="text-red-600 hover:text-red-700"
+                    title="Delete product"
                 >
                   <FaTrash />
                 </button>
