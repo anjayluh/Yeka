@@ -1,36 +1,66 @@
+# Yeka Organics Project
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
-First, run the development server:
+To get started with this project, follow one of the installation options below:
+
+### 1. For users with the correct React version:
+
+Ensure that your React version matches the required one for this project. You can check your React version by running:
+
+```bash
+npm list react
+
+```
+
+If you have the correct version, you can install dependencies normally:
+
+```bash
+npm install
+```
+
+### 2. For users without the correct React version but want to proceed:
+If you're using an incorrect version of React, but want to proceed with the installation anyway, use the following command to install dependencies:
+
+```bash
+npm install --legacy-peer-deps
+```
+
+This will bypass version compatibility issues. However, please be aware that this may cause issues during development or production depending on the dependencies involved.
+
+Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. For users who want to use --force:
+If you must install dependencies despite potential conflicts (this may cause issues and is not recommended unless absolutely necessary), use the --force option:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install --force
+```
+Proceeding with this option may result in broken dependencies or unexpected behavior, so use it only if you understand the potential risks.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+If you have the correct version, you can install dependencies normally:
 
-## Learn More
+```bash
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+If you have the correct version, you can install dependencies normally:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+After installing dependencies, run the development server:
 
-## Deploy on Vercel
+```bash
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 4. Accessing the Website and Admin Panel
+The website will be available at the base URL: http://localhost:3000
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To access the admin dashboard, visit http://localhost:3000/admin
