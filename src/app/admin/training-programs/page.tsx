@@ -68,7 +68,8 @@ export default function ProgramDashboard() {
 
             <div className="flex-1 p-8 bg-gray-50">
                 <header className="flex flex-col lg:flex-row justify-between items-center mb-8 space-y-4 lg:space-y-0 lg:space-x-4">
-                    <Link href="/admin/training-programs/add-training-program">
+                <h1 className="text-4xl font-bold text-gray-800">Training Programs</h1>
+                <Link href="/admin/training-programs/add-training-program">
                         <button className="px-4 py-2 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700">
                             Add Training Program
                         </button>
