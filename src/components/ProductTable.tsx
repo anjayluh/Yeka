@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { formatNumberWithCommas } from "@/utils/formatter";
 
 interface TableProps {
   data: Array<{
@@ -54,9 +55,9 @@ export default function ProductTable({ data, onEdit, onDelete }: TableProps) {
               <tr key={item.id} className="border-b hover:bg-green-50">
                 <td className="px-6 py-4">{item.id}</td>
                 <td className="px-6 py-4">{item.name}</td>
-                <td className="px-6 py-4 text-right">{item.price}</td>
-                <td className="px-6 py-4 text-right">{item.min_order}</td>
-                <td className="px-6 py-4 text-right">{item.max_order}</td>
+                <td className="px-6 py-4 text-right">{formatNumberWithCommas(item.price)}</td>
+                <td className="px-6 py-4 text-right">{formatNumberWithCommas(item.min_order)}</td>
+                <td className="px-6 py-4 text-right">{formatNumberWithCommas(item.max_order)}</td>
                 <td className="px-6 py-4 flex space-x-2">
                   <FaEdit
                     onClick={() => handleEditClick(item)}
@@ -96,15 +97,15 @@ export default function ProductTable({ data, onEdit, onDelete }: TableProps) {
               </div>
               <div className="flex justify-between">
                 <div className="font-bold">Price:</div>
-                <div>{item.price}</div>
+                <div>{formatNumberWithCommas(item.price)}</div>
               </div>
               <div className="flex justify-between">
                 <div className="font-bold">Min Order:</div>
-                <div>{item.min_order}</div>
+                <div>{formatNumberWithCommas(item.min_order)}</div>
               </div>
               <div className="flex justify-between">
                 <div className="font-bold">Max Order:</div>
-                <div>{item.max_order}</div>
+                <div>{formatNumberWithCommas(item.max_order)}</div>
               </div>
               <div className="flex justify-between mt-2">
                 <button

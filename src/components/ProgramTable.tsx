@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { formatNumberWithCommas } from "@/utils/formatter";
 
 interface TableProps {
   data: Array<{
@@ -54,8 +55,8 @@ export default function ProgramTable({ data, onEdit, onDelete }: TableProps) {
               <tr key={item.id} className="border-b hover:bg-green-50">
                 <td className="px-6 py-4">{item.id}</td>
                 <td className="px-6 py-4">{item.mode}</td>
-                <td className="px-6 py-4">{item.time_frame}</td>
-                <td className="px-6 py-4">{item.fee}</td>
+                <td className="px-6 py-4">{formatNumberWithCommas(item.time_frame)}</td>
+                <td className="px-6 py-4">{formatNumberWithCommas(item.fee)}</td>
                 <td className="px-6 py-4">
                   <FaEdit
                     onClick={() => handleEditClick(item)}
@@ -97,11 +98,11 @@ export default function ProgramTable({ data, onEdit, onDelete }: TableProps) {
               </div>
               <div className="flex justify-between">
                 <div className="font-bold">Time Frame:</div>
-                <div>{item.time_frame}</div>
+                <div>{formatNumberWithCommas(item.time_frame)}</div>
               </div>
               <div className="flex justify-between">
                 <div className="font-bold">Fee:</div>
-                <div>{item.fee}</div>
+                <div>{formatNumberWithCommas(item.fee)}</div>
               </div>
               <div className="flex justify-between mt-2">
                 <button
