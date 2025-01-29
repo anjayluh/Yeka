@@ -224,7 +224,7 @@ export default function HomePage() {
 
           {/* Navigation */}
           <nav className={`lg:flex gap-6 ${isMenuOpen ? 'left-0 flex flex-col absolute top-20 bg-green-700 w-full py-6' : 'hidden lg:flex'}`}>
-            {['Home', 'About', 'Services', 'Client', 'Blog', 'Contact Us'].map((item, index) => (
+            {['Home', 'About', 'Services', 'Client', 'Blogs', 'Contact Us'].map((item, index) => (
               <a
                 key={index}
                 href={`#${item.toLowerCase().replace(' ', '-')}`}
@@ -389,7 +389,7 @@ export default function HomePage() {
       )}
 
       {/* Blogs Section */}
-      <section id="blog" className="bg-green-100 py-12">
+      <section id="blogs" className="bg-green-100 py-12">
         <div className="container mx-auto mb-2">
           <h2 className="text-3xl font-bold text-center text-green-700">Latest Blog Posts</h2>
 

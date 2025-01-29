@@ -9,7 +9,7 @@ import NavBar from '@/components/shared/NavBar';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-export default function AdminDashboard() {
+export default function ContactsDashboard() {
     const router = useRouter();
     const [contacts, setContacts] = useState([]);
     const [loading, setLoading] = useState(true);

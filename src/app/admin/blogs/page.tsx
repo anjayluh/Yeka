@@ -9,7 +9,7 @@ import NavBar from '@/components/shared/NavBar';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-export default function AdminDashboard() {
+export default function BlogsDashboard() {
     const router = useRouter();
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
