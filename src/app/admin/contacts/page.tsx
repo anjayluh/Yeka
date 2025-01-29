@@ -62,11 +62,11 @@ export default function AdminDashboard() {
     }
 
     return (
-        <div className="flex min-h-screen">
+        <div className="flex flex-col lg:flex-row min-h-screen">
             <NavBar />
 
             <div className="flex-1 p-8 bg-gray-50">
-                <header className="flex justify-between items-center mb-8">
+                <header className="flex flex-col lg:flex-row justify-between items-center mb-8 space-y-4 lg:space-y-0 lg:space-x-4">
                     <h1 className="text-4xl font-bold text-gray-800">Contacts</h1>
                     <Link href="/admin/contacts/add-contact">
                         <button className="px-4 py-2 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700">

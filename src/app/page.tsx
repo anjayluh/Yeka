@@ -174,7 +174,7 @@ export default function HomePage() {
           </button>
 
           {/* Navigation */}
-          <nav className={`lg:flex gap-6 ${isMenuOpen ? 'flex flex-col absolute top-20 right-6 bg-green-700 w-full py-6' : 'hidden lg:flex'}`}>
+          <nav className={`lg:flex gap-6 ${isMenuOpen ? 'left-0 flex flex-col absolute top-20 bg-green-700 w-full py-6' : 'hidden lg:flex'}`}>
             {['Home', 'About', 'Services', 'Client', 'Blog', 'Contact Us'].map((item, index) => (
               <a
                 key={index}
