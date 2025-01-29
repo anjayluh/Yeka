@@ -48,6 +48,17 @@ export default function HomePage() {
   const [selectedProgram, setSelectedProgram] = useState<any | null>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const servicesContainerRef = useRef<HTMLDivElement>(null);
+  const [animatedNumbers, setAnimatedNumbers] = useState({
+    experience: 0,
+    customers: 0,
+    awards: 0,
+  });
+
+  const targetNumbers = {
+    experience: 25,
+    customers: 250,
+    awards: 2,
+  };
 
   useEffect(() => {
     const fetchTrainingPrograms = async () => {
@@ -97,6 +108,37 @@ export default function HomePage() {
       container.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
     }
   };
+
+  useEffect(() => {
+    const animateValue = (key: keyof typeof targetNumbers, duration = 2000) => {
+      const start = 0;
+      const end = targetNumbers[key];
+      const startTime = performance.now();
+
+      const updateNumber = (currentTime: number) => {
+        const elapsedTime = currentTime - startTime;
+        if (elapsedTime < duration) {
+          const progress = Math.min(elapsedTime / duration, 1);
+          setAnimatedNumbers((prev) => ({
+            ...prev,
+            [key]: Math.floor(progress * (end - start) + start),
+          }));
+          requestAnimationFrame(updateNumber);
+        } else {
+          setAnimatedNumbers((prev) => ({
+            ...prev,
+            [key]: end,
+          }));
+        }
+      };
+
+      requestAnimationFrame(updateNumber);
+    };
+
+    Object.keys(targetNumbers).forEach((key) => {
+      animateValue(key as keyof typeof targetNumbers);
+    });
+  }, []);
 
   const isLeftArrowDisabled = scrollPosition <= 0;
   const isRightArrowDisabled =
@@ -173,15 +215,15 @@ export default function HomePage() {
         <h2 className="text-3xl font-bold text-green-700">Why Choose Us</h2>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-4xl font-bold text-yellow-500">25+</h3>
+            <h3 className="text-4xl font-bold text-yellow-500">{animatedNumbers.experience}+</h3>
             <p>Years of Experience</p>
           </div>
           <div>
-            <h3 className="text-4xl font-bold text-yellow-500">250+</h3>
+            <h3 className="text-4xl font-bold text-yellow-500">{animatedNumbers.customers}+</h3>
             <p>Happy Customers</p>
           </div>
           <div>
-            <h3 className="text-4xl font-bold text-yellow-500">2+</h3>
+            <h3 className="text-4xl font-bold text-yellow-500">{animatedNumbers.awards}+</h3>
             <p>Awards Won</p>
           </div>
         </div>
