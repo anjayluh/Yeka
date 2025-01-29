@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
@@ -58,6 +59,13 @@ export default function HomePage() {
     experience: 25,
     customers: 250,
     awards: 2,
+  };
+
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(prevState => !prevState);
   };
 
   useEffect(() => {
@@ -149,6 +157,7 @@ export default function HomePage() {
       {/* Navigation */}
       <header className="sticky top-0 bg-green-700 text-white shadow-md z-50">
         <div className="container mx-auto flex items-center justify-between py-4 px-6">
+          {/* Logo */}
           <Image
             src="/images/logo.png"
             alt="Logo"
@@ -156,12 +165,23 @@ export default function HomePage() {
             height={80}
             className="object-contain"
           />
-          <nav className="flex gap-6">
+
+          {/* Hamburger Icon (Only visible on mobile) */}
+          <button
+            className="lg:hidden block text-white text-3xl"
+            onClick={toggleMenu}
+          >
+            &#9776; {/* Hamburger icon */}
+          </button>
+
+          {/* Navigation */}
+          <nav className={`lg:flex gap-6 ${isMenuOpen ? 'flex flex-col absolute top-20 right-6 bg-green-700 w-full py-6' : 'hidden lg:flex'}`}>
             {['Home', 'About', 'Service', 'Client', 'Blog', 'Contact Us'].map((item, index) => (
               <a
                 key={index}
                 href={`#${item.toLowerCase().replace(' ', '-')}`}
-                className="hover:text-yellow-400 transition"
+                className="hover:text-yellow-400 transition py-2 px-4 text-center"
+                onClick={() => setIsMenuOpen(false)}
               >
                 {item}
               </a>
@@ -235,9 +255,9 @@ export default function HomePage() {
         <div className="container mx-auto scrollbar-thin scrollbar-thumb-green-700">
           <h2 className="text-3xl font-bold text-center text-green-700">Our Services</h2>
           {loading ?
-          <div className="flex justify-center items-center py-12">
-            <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full"></div>
-          </div>
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full"></div>
+            </div>
             :
             <div className="mt-8 relative">
               <div className="flex justify-center">
