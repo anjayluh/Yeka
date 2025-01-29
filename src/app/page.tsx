@@ -145,7 +145,7 @@ export default function HomePage() {
     programs.length < 5 || scrollPosition >= (programs.length - 4) * 264;
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-green-100 via-white to-green-50">
+    <main className="min-h-screen bg-gradient-to-b from-green-100 via-white to-green-50 home-page">
       {/* Navigation */}
       <header className="sticky top-0 bg-green-700 text-white shadow-md z-50">
         <div className="container mx-auto flex items-center justify-between py-4 px-6">

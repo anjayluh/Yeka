@@ -18,6 +18,11 @@ module.exports = {
           400: '#cbd5e0',
         },
       },
+      fontFamily: {
+        roboto: ['Roboto', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
+        helvetica: ['Helvetica', 'Arial', 'sans-serif'],
+      }
     },
   },
   plugins: [],

@@ -35,5 +35,8 @@ button {
   .scrollbar-thumb-green-700 {
     scrollbar-color: #047857 #d1fae5;
   }
-
+  
+  .home-page{
+    font-family: 'Roboto', 'Inter', Helvetica, Arial, sans-serif;
+  }
 }
