@@ -10,6 +10,17 @@ import Slider from 'react-slick';
 import { Link as ScrollLink } from 'react-scroll';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import SectionHeader from '@/components/SectionHeader';
+import { Inter } from 'next/font/google'
+import { PiPlantFill } from "react-icons/pi";
+import RandomIcon from '@/components/shared/RandomIcon';
+import ImageCard from '@/components/shared/ImageCard';
+
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+})
 
 export default function HomePage() {
   const sliderSettings = {
@@ -58,6 +69,23 @@ export default function HomePage() {
   });
 
   const [blogs, setBlogs] = useState<any[]>([]);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const shopLink = 'https://yeka-organic-farms.vendblue.store/'
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const targetNumbers = {
     experience: 25,
@@ -203,7 +231,11 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-green-100 via-white to-green-50 home-page">
       {/* Navigation */}
-      <header className="sticky top-0 bg-green-700 text-white shadow-md z-50">
+       <header
+      className={`fixed top-0 left-0 w-full z-50 text-white text-2xl transition-all duration-300 ${
+        isScrolled ? "bg-green-700 shadow-md" : "bg-transparent"
+      }`}
+    >
         <div className="container mx-auto flex items-center justify-between py-4 px-6">
           {/* Logo */}
           <Image
@@ -224,10 +256,11 @@ export default function HomePage() {
 
           {/* Navigation */}
           <nav className={`lg:flex gap-6 ${isMenuOpen ? 'left-0 flex flex-col absolute top-20 bg-green-700 w-full py-6' : 'hidden lg:flex'}`}>
-            {['Home', 'About', 'Services', 'Client', 'Blogs', 'Contact Us'].map((item, index) => (
+            {['Home', 'About', 'Services', 'Shop', 'Blogs', 'Contact Us'].map((item, index) => (
               <a
                 key={index}
-                href={`#${item.toLowerCase().replace(' ', '-')}`}
+                target={index!=3? `_self`: '_blank'}
+                href={index!=3? `#${item.toLowerCase().replace(' ', '-')}`: shopLink}
                 className="hover:text-yellow-400 transition py-2 px-4 text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -239,32 +272,32 @@ export default function HomePage() {
       </header>
 
       {/* Slider Section */}
-      <section id='about' className="w-full h-[500px] relative">
-        <Slider {...sliderSettings}>
-          {images.map((img, index) => (
-            <div key={index} className="w-full h-[500px]">
-              <Image
-                src={img.src}
-                alt={img.alt}
-                width={1920}
-                height={500}
-                className="object-cover w-full h-full"
-              />
-            </div>
-          ))}
-        </Slider>
+      <section id='about' className="w-full h-[900px] relative">
+      <Slider {...sliderSettings}>
+    {images.map((img, index) => (
+      <div key={index} className="relative w-full h-[900px]">
+        <Image
+          src={img.src}
+          alt={img.alt}
+          layout="fill" /* Ensures it covers the div */
+          objectFit="cover" /* Maintains aspect ratio and covers the area */
+          className="w-full h-full"
+        />
+      </div>
+    ))}
+  </Slider>
 
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 text-center text-white">
-          <h1 className="text-4xl font-bold">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-30 text-center text-white">
+          <h1 className="text-5xl  md:text-7xl font-bold my-5">
             Saving Costs For Farmers
           </h1>
-          <p className="mt-4 text-xl">
+          <p className="mt-4 text-xl  md:text-3xl my-5">
             Helping Farmers turn waste into feed for Poultry, Pigs, and Fish
           </p>
-          <div className="mt-6 flex gap-4">
+          <div className="mt-9 flex gap-4">
             <a
               href="#contact-us"
-              className="px-6 py-3 bg-yellow-400 text-black font-semibold rounded shadow hover:bg-yellow-500"
+              className="px-6 py-3 bg-yellow-500 text-black text-xl font-semibold rounded shadow hover:bg-yellow-900"
             >
               Contact Us
             </a>
@@ -279,20 +312,20 @@ export default function HomePage() {
       </section>
 
       {/* Statistics Section */}
-      <section id="about" className="container mx-auto py-12 text-center">
-        <h2 className="text-3xl font-bold text-green-700">Why Choose Us</h2>
+      <section id="about" className="container mx-auto py-12 text-center my-9">
+        <SectionHeader title={'Why Choose Us'}/>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-4xl font-bold text-yellow-500">{animatedNumbers.experience}+</h3>
-            <p>Years of Experience</p>
+            <h3 className="text-3xl font-bold text-yellow-500">{animatedNumbers.experience}+</h3>
+            <p className="my-3">Years of Experience</p>
           </div>
           <div>
             <h3 className="text-4xl font-bold text-yellow-500">{animatedNumbers.customers}+</h3>
-            <p>Happy Customers</p>
+            <p className='my-3'>Happy Customers</p>
           </div>
           <div>
             <h3 className="text-4xl font-bold text-yellow-500">{animatedNumbers.awards}+</h3>
-            <p>Awards Won</p>
+            <p className='my-3'>Awards Won</p>
           </div>
         </div>
       </section>
@@ -301,13 +334,13 @@ export default function HomePage() {
 
       <section id="services" className="bg-green-50 py-12">
         <div className="container mx-auto scrollbar-thin scrollbar-thumb-green-700">
-          <h2 className="text-3xl font-bold text-center text-green-700">Our Services</h2>
+        <SectionHeader title={'Our Services'}/>
           {programsLoading ?
-            <div className="flex justify-center items-center py-12">
+            <div className="flex justify-center items-center py-12 ">
               <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full"></div>
             </div>
             :
-            <div className="mt-8 relative">
+            <div className="mt-8 relative mx-2">
               <div className="flex justify-center">
                 <button
                   onClick={() => handleProgramScroll('left')}
@@ -327,8 +360,10 @@ export default function HomePage() {
                       className="p-6 bg-white shadow-md rounded-md hover:shadow-lg transition w-64 flex-shrink-0"
                       onClick={() => handleProgramClick(program)}
                     >
+                      <RandomIcon size={30} />
                       <h3 className="text-lg font-bold text-green-700">{program.mode}</h3>
                       <p className="mt-2 text-gray-600">
+
                         {program.description.split(' ').slice(0, 10).join(' ')}...
                       </p>
                       <ScrollLink
@@ -390,8 +425,9 @@ export default function HomePage() {
 
       {/* Blogs Section */}
       <section id="blogs" className="bg-green-100 py-12">
-        <div className="container mx-auto mb-2">
-          <h2 className="text-3xl font-bold text-center text-green-700">Latest Blog Posts</h2>
+        <SectionHeader title={'Blog Posts'}/>
+        <div className="container mx-auto mb-2 mx-3">
+
 
           {blogsLoading ? (
             <div className="flex justify-center items-center py-12">
@@ -411,23 +447,13 @@ export default function HomePage() {
                   ref={blogContainerRef}
                   className="flex overflow-x-auto gap-8 max-w-4xl mx-auto scrollbar-thin scrollbar-thumb-green-700 scrollbar-track-green-200"
                 >
-                  {blogs.map((blog) => (
-                    <div
-                      key={blog.id}
-                      className="p-6 bg-white shadow-md rounded-md hover:shadow-lg transition w-64 flex-shrink-0"
-                      onClick={() => handleBlogClick(blog)}
-                    >
-                      <h3 className="text-lg font-bold text-green-700">{blog.title}</h3>
-                      <ScrollLink
-                      href={blog.link}
-                        smooth
-                        duration={500}
-                        className="text-green-500 mt-4 inline-block hover:underline cursor-pointer"
-                      >
-                        Read More
-                      </ScrollLink>
-                    </div>
-                  ))}
+
+                  {blogs.length != 0? blogs.map((blog) => (
+
+                    <ImageCard key={blog.id}
+                    title={blog.title} link={blog.link}/>
+
+                  )): <h1 className='text-center'>No Blogs Published Yet. Coming soon.</h1>}
                 </div>
                 <button
                   onClick={() => handleBlogScroll('right')}
@@ -444,9 +470,9 @@ export default function HomePage() {
 
       {/* Contact Form Section */}
       <section id="contact-us" className="container mx-auto py-12">
-        <h2 className="text-3xl font-bold text-center text-green-700">Contact Us</h2>
+      <SectionHeader title={'Contact Us'}/>
         <form className="mt-8 max-w-2xl mx-auto">
-          <div className="grid grid-cols-1 gap-6">
+          <div className="grid mx-8 grid-cols-1 gap-6">
             <input
               type="text"
               placeholder="Name"
