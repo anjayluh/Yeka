@@ -321,7 +321,7 @@ export default function HomePage() {
           </div>
           <div>
             <h3 className="text-4xl font-bold text-yellow-500">{animatedNumbers.customers}+</h3>
-            <p className='my-3'>Happy Customers</p>
+            <p className='my-3'>Joyful Customers</p>
           </div>
           <div>
             <h3 className="text-4xl font-bold text-yellow-500">{animatedNumbers.awards}+</h3>
