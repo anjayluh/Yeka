@@ -229,14 +229,13 @@ export default function HomePage() {
     programs.length < 5 || blogScrollPosition >= (programs.length - 4) * 264;
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-green-100 via-white to-green-50 home-page">
+    <main className="min-h-screen w-full w-100 bg-gradient-to-b from-green-100 via-white to-green-50 home-page">
       {/* Navigation */}
-       <header
-      className={`fixed top-0 left-0 w-full z-50 text-white text-2xl transition-all duration-300 ${
-        isScrolled ? "bg-green-700 shadow-md" : "bg-transparent"
-      }`}
-    >
-        <div className="container mx-auto flex items-center justify-between py-4 px-6">
+      <header
+        className={`fixed top-0 left-0 w-full z-50 text-white text-2xl transition-all duration-300 ${isScrolled ? "bg-green-700 shadow-md" : "bg-transparent"
+          }`}
+      >
+        <div className=" mx-auto flex items-center justify-between py-4 px-6">
           {/* Logo */}
           <Image
             src="/images/logo.png"
@@ -259,8 +258,8 @@ export default function HomePage() {
             {['Home', 'About', 'Services', 'Shop', 'Blogs', 'Contact Us'].map((item, index) => (
               <a
                 key={index}
-                target={index!=3? `_self`: '_blank'}
-                href={index!=3? `#${item.toLowerCase().replace(' ', '-')}`: shopLink}
+                target={index != 3 ? `_self` : '_blank'}
+                href={index != 3 ? `#${item.toLowerCase().replace(' ', '-')}` : shopLink}
                 className="hover:text-yellow-400 transition py-2 px-4 text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -272,20 +271,20 @@ export default function HomePage() {
       </header>
 
       {/* Slider Section */}
-      <section id='about' className="w-full h-[900px] relative">
-      <Slider {...sliderSettings}>
-    {images.map((img, index) => (
-      <div key={index} className="relative w-full h-[900px]">
-        <Image
-          src={img.src}
-          alt={img.alt}
-          layout="fill" /* Ensures it covers the div */
-          objectFit="cover" /* Maintains aspect ratio and covers the area */
-          className="w-full h-full"
-        />
-      </div>
-    ))}
-  </Slider>
+      <section id='about' className="w-screen h-[900px]  relative overflow-x-hidden">
+        <Slider {...sliderSettings}>
+          {images.map((img, index) => (
+            <div key={index} className="relative w-screen h-[900px]">
+              <Image
+                src={img.src}
+                alt={img.alt}
+                layout="fill" /* Ensures it covers the div */
+                objectFit="cover" /* Maintains aspect ratio and covers the area */
+                className="w-full h-full"
+              />
+            </div>
+          ))}
+        </Slider>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-30 text-center text-white">
           <h1 className="text-5xl  md:text-7xl font-bold my-5">
@@ -313,7 +312,7 @@ export default function HomePage() {
 
       {/* Statistics Section */}
       <section id="about" className="container mx-auto py-12 text-center my-9">
-        <SectionHeader title={'Why Choose Us'}/>
+        <SectionHeader title={'Why Choose Us'} />
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-3xl font-bold text-yellow-500">{animatedNumbers.experience}+</h3>
@@ -334,7 +333,7 @@ export default function HomePage() {
 
       <section id="services" className="bg-green-50 py-12">
         <div className="container mx-auto scrollbar-thin scrollbar-thumb-green-700">
-        <SectionHeader title={'Our Services'}/>
+          <SectionHeader title={'Our Services'} />
           {programsLoading ?
             <div className="flex justify-center items-center py-12 ">
               <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full"></div>
@@ -425,7 +424,7 @@ export default function HomePage() {
 
       {/* Blogs Section */}
       <section id="blogs" className="bg-green-100 py-12">
-        <SectionHeader title={'Blog Posts'}/>
+        <SectionHeader title={'Blog Posts'} />
         <div className="container mx-auto mb-2 mx-3">
 
 
@@ -448,12 +447,12 @@ export default function HomePage() {
                   className="flex overflow-x-auto gap-8 max-w-4xl mx-auto scrollbar-thin scrollbar-thumb-green-700 scrollbar-track-green-200"
                 >
 
-                  {blogs.length != 0? blogs.map((blog) => (
+                  {blogs.length != 0 ? blogs.map((blog) => (
 
                     <ImageCard key={blog.id}
-                    title={blog.title} link={blog.link}/>
+                      title={blog.title} link={blog.link} />
 
-                  )): <h1 className='text-center'>No Blogs Published Yet. Coming soon.</h1>}
+                  )) : <h1 className='text-center'>No Blogs Published Yet. Coming soon.</h1>}
                 </div>
                 <button
                   onClick={() => handleBlogScroll('right')}
@@ -470,7 +469,7 @@ export default function HomePage() {
 
       {/* Contact Form Section */}
       <section id="contact-us" className="container mx-auto py-12">
-      <SectionHeader title={'Contact Us'}/>
+        <SectionHeader title={'Contact Us'} />
         <form className="mt-8 max-w-2xl mx-auto">
           <div className="grid mx-8 grid-cols-1 gap-6">
             <input
