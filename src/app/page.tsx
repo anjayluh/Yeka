@@ -336,7 +336,7 @@ export default function HomePage() {
           <SectionHeader title={'Our Services'} />
           {programsLoading ?
             <div className="flex justify-center items-center py-12 ">
-              <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full"></div>
+              <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full" />
             </div>
             :
             <div className="mt-8 relative mx-2">
