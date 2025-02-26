@@ -4,64 +4,64 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
-import BlogForm from '@/components/BlogForm';
+import StatisticForm from '@/components/StatisticForm';
 import Spinner from '@/components/shared/Spinner';
 
-export default function EditBlog() {
+export default function EditStatistic() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
-      title: '',
-      link: '',
+      name: '',
+      value: '',
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBlog = async () => {
-      const blogId = searchParams.get('id');
-      if (!blogId) {
-        console.error('Blog ID not found in the URL');
+    const fetchStatistic = async () => {
+      const statisticId = searchParams.get('id');
+      if (!statisticId) {
+        console.error('Statistic ID not found in the URL');
         setLoading(false);
         return;
       }
 
       try {
-        const blogRef = doc(db, 'Blogs', blogId);
-        const blogSnapshot = await getDoc(blogRef);
+        const statisticRef = doc(db, 'Statistics', statisticId);
+        const statisticSnapshot = await getDoc(statisticRef);
 
-        if (blogSnapshot.exists()) {
-          const blogData = blogSnapshot.data();
+        if (statisticSnapshot.exists()) {
+          const statisticData = statisticSnapshot.data();
           setFormData({
-            title: blogData.title || '',
-            link: blogData.link || '',
+            name: statisticData.name || '',
+            value: statisticData.value || '',
           });
         } else {
-          console.error('Blog not found in the database');
+          console.error('Statistic not found in the database');
         }
       } catch (error) {
-        console.error('Error fetching blog data:', error);
+        console.error('Error fetching statistic data:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBlog();
+    fetchStatistic();
   }, [searchParams]);
 
-  const handleSubmit = async (blog: any) => {
-    const blogId = searchParams.get('id');
-    if (!blogId) {
-      console.error('Blog ID not found in the URL');
+  const handleSubmit = async (statistic: any) => {
+    const statisticId = searchParams.get('id');
+    if (!statisticId) {
+      console.error('Statistic ID not found in the URL');
       return;
     }
 
     try {
-      const blogRef = doc(db, 'Blogs', blogId);
-      await updateDoc(blogRef, blog);
+      const statisticRef = doc(db, 'Statistics', statisticId);
+      await updateDoc(statisticRef, statistic);
 
-      router.push('/admin/blogs');
+      router.push('/admin/statistics');
     } catch (error) {
-      console.error('Error updating blog:', error);
+      console.error('Error updating statistic:', error);
     }
   };
 
@@ -69,10 +69,10 @@ export default function EditBlog() {
     return <Spinner />;
   }
   return (
-    <BlogForm
+    <StatisticForm
       initialData={formData}
       onSubmit={handleSubmit}
-      formTitle="Edit Blog"
+      formTitle="Edit Statistic"
       submitButtonText="Save"
     />
   );
