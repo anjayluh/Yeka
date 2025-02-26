@@ -68,19 +68,16 @@ export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [programs, setPrograms] = useState<any[]>([]);
   const [programsLoading, setProgramsLoading] = useState(true);
+  const [statisticsLoading, setStatisticsLoading] = useState(true);
   const [blogsLoading, setBlogsLoading] = useState(true);
   const [selectedProgram, setSelectedProgram] = useState<any | null>(null);
   const [serviceScrollPosition, setServiceScrollPosition] = useState(0);
   const servicesContainerRef = useRef<HTMLDivElement>(null);
   const [blogScrollPosition, setBlogScrollPosition] = useState(0);
   const blogContainerRef = useRef<HTMLDivElement>(null);
-  const [animatedNumbers, setAnimatedNumbers] = useState({
-    experience: 0,
-    customers: 0,
-    awards: 0,
-  });
-
+  const [animatedNumbers, setAnimatedNumbers] = useState<any>({});
   const [blogs, setBlogs] = useState<any[]>([]);
+  const [statistics, setStatistics] = useState<any[]>([]);
   const [isScrolled, setIsScrolled] = useState(false);
   const shopLink = 'https://yeka-organic-farms.vendblue.store/'
 
@@ -143,8 +140,24 @@ export default function HomePage() {
       }
     };
 
+    const fetchStatistics = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'Statistics'));
+        const statisticsData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setStatistics(statisticsData);
+      } catch (error) {
+        console.error('Error fetching statistics:', error);
+      } finally {
+        setStatisticsLoading(false);
+      }
+    };
+
     fetchTrainingPrograms();
     fetchBlogs();
+    fetchStatistics();
   }, []);
 
   const handleProgramClick = (program: any) => {
@@ -195,15 +208,14 @@ export default function HomePage() {
         direction === 'left'
           ? Math.max(0, blogScrollPosition - scrollAmount)
           : blogScrollPosition + scrollAmount;
-      setServiceScrollPosition(newScrollPosition);
+      setBlogScrollPosition(newScrollPosition);
       container.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
     }
   };
 
+  // Animate the statistics numbers
   useEffect(() => {
-    const animateValue = (key: keyof typeof targetNumbers, duration = 2000) => {
-      const start = 0;
-      const end = targetNumbers[key];
+    const animateValue = (key: string, startValue: number, endValue: number, duration = 2000) => {
       const startTime = performance.now();
 
       const updateNumber = (currentTime: number) => {
@@ -212,13 +224,13 @@ export default function HomePage() {
           const progress = Math.min(elapsedTime / duration, 1);
           setAnimatedNumbers((prev) => ({
             ...prev,
-            [key]: Math.floor(progress * (end - start) + start),
+            [key]: Math.floor(progress * (endValue - startValue) + startValue),
           }));
           requestAnimationFrame(updateNumber);
         } else {
           setAnimatedNumbers((prev) => ({
             ...prev,
-            [key]: end,
+            [key]: endValue,
           }));
         }
       };
@@ -226,10 +238,11 @@ export default function HomePage() {
       requestAnimationFrame(updateNumber);
     };
 
-    Object.keys(targetNumbers).forEach((key) => {
-      animateValue(key as keyof typeof targetNumbers);
+    statistics.forEach((stat) => {
+      animateValue(stat.name, 0, stat.value);
     });
-  }, []);
+  }, [statistics]);
+
 
   const isServiceLeftArrowDisabled = serviceScrollPosition <= 0;
   const isServiceRightArrowDisabled =
@@ -237,13 +250,13 @@ export default function HomePage() {
 
   const isBlogLeftArrowDisabled = blogScrollPosition <= 0;
   const isBlogRightArrowDisabled =
-    programs.length < 5 || blogScrollPosition >= (programs.length - 4) * 264;
-
+    blogs.length < 5 || blogScrollPosition >= (blogs.length - 4) * 264;
+console.log(statistics, 'statistics')
   return (
     <main className="min-h-screen w-full w-100 bg-gradient-to-b from-green-100 via-white to-green-50 home-page">
       {/* Navigation */}
       <header
-        className={`fixed top-0 left-0 w-full z-50 text-white text-2xl transition-all duration-300 ${isScrolled ? "bg-green-700 shadow-md" : "bg-transparent"
+        className={`fixed top-0 left-0 w-full z-50 text-green-700 text-2xl transition-all duration-300 ${isScrolled ? "bg-white shadow-md" : "bg-transparent"
           }`}
       >
         <div className=" mx-auto flex items-center justify-between py-4 px-6">
@@ -258,14 +271,14 @@ export default function HomePage() {
 
           {/* Hamburger Icon (Only visible on mobile) */}
           <button
-            className="lg:hidden block text-white text-3xl"
+            className="lg:hidden block text-green-700 text-3xl"
             onClick={toggleMenu}
           >
             &#9776; {/* Hamburger icon */}
           </button>
 
           {/* Navigation */}
-          <nav className={`lg:flex gap-6 ${isMenuOpen ? 'left-0 flex flex-col absolute top-20 bg-green-700 w-full py-6' : 'hidden lg:flex'}`}>
+          <nav className={`lg:flex gap-6 ${isMenuOpen ? 'left-0 flex flex-col absolute top-20 bg-white w-full py-6' : 'hidden lg:flex'}`}>
             {['Home', 'About', 'Services', 'Shop', 'Blogs', 'Contact Us'].map((item, index) => (
               <a
                 key={index}
@@ -323,20 +336,16 @@ export default function HomePage() {
 
       {/* Statistics Section */}
       <section id="about" className="container mx-auto py-12 text-center my-9">
-        <SectionHeader title={'Why Choose Us'} />
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h3 className="text-3xl font-bold text-yellow-500">{animatedNumbers.experience}+</h3>
-            <p className="my-3">Years of Experience</p>
-          </div>
-          <div>
-            <h3 className="text-4xl font-bold text-yellow-500">{animatedNumbers.customers}+</h3>
-            <p className='my-3'>Happy Customers</p>
-          </div>
-          <div>
-            <h3 className="text-4xl font-bold text-yellow-500">{animatedNumbers.awards}+</h3>
-            <p className='my-3'>Awards Won</p>
-          </div>
+    <SectionHeader title={'Why Choose Us'} />
+    <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+          {statistics.map((stat) => (
+            <div key={stat.id}>
+              <h3 className="text-3xl font-bold text-yellow-500">{animatedNumbers[stat.name] !== undefined
+                ? animatedNumbers[stat.name]
+                : 0}+</h3>
+              <p className="my-3">{stat.name}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -362,7 +371,7 @@ export default function HomePage() {
                 </button>
                 <div
                   ref={servicesContainerRef}
-                  className="flex overflow-x-auto gap-8 max-w-4xl mx-auto"
+                  className="flex overflow-x-auto gap-4 scrollbar-hide scroll-smooth snap-x"
                 >
                   {programs.map((program) => (
                     <div
@@ -444,35 +453,40 @@ export default function HomePage() {
               <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full"></div>
             </div>
           ) : (
-            <div className="relative mt-8">
-              <div className="flex justify-center">
-                <button
-                  onClick={() => handleBlogScroll('left')}
-                  disabled={isBlogLeftArrowDisabled}
-                  className={`absolute left-0 top-1/2 transform -translate-y-1/2 bg-green-700 text-white px-2 py-1 rounded-full z-10 ${isBlogLeftArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-800'}`}
-                >
-                  &larr;
-                </button>
-                <div
-                  ref={blogContainerRef}
-                  className="flex overflow-x-auto gap-8 max-w-4xl mx-auto scrollbar-thin scrollbar-thumb-green-700 scrollbar-track-green-200"
-                >
-
-                  {blogs.length != 0 ? blogs.map((blog) => (
-
-                    <ImageCard key={blog.id}
-                      title={blog.title} link={blog.link} image={blog.image} />
-
-                  )) : <h1 className='text-center'>No Blogs Published Yet. Coming soon.</h1>}
-                </div>
-                <button
-                  onClick={() => handleBlogScroll('right')}
-                  disabled={isBlogRightArrowDisabled}
-                  className={`absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-700 text-white px-2 py-1 rounded-full z-10 ${isBlogRightArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-800'}`}
-                >
-                  &rarr;
-                </button>
+            <div className="relative w-full">
+              {/* Left Scroll Button */}
+              <button
+                className={`absolute left-0 top-1/2 transform -translate-y-1/2 bg-white shadow-md px-2 py-1 rounded-full ${isBlogLeftArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
+                onClick={() => handleBlogScroll('left')}
+                disabled={isBlogLeftArrowDisabled}
+              >
+                ←
+              </button>
+              <div
+                ref={blogContainerRef}
+                className="flex overflow-x-auto gap-4 scrollbar-hide scroll-smooth snap-x"
+                style={{ scrollBehavior: 'smooth' }}
+              >
+                {blogs.map((blog) => (
+                  <div key={blog.id} className="snap-start w-[264px] flex-shrink-0">
+                    <ImageCard
+                      image={blog.image}
+                      title={blog.title}
+                      description={blog.description}
+                      onClick={() => handleBlogClick(blog)}
+                    />
+                  </div>
+                ))}
               </div>
+
+              {/* Right Scroll Button */}
+              <button
+                className={`absolute right-0 top-1/2 transform -translate-y-1/2 bg-white shadow-md px-2 py-1 rounded-full ${isBlogRightArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
+                onClick={() => handleBlogScroll('right')}
+                disabled={isBlogRightArrowDisabled}
+              >
+                →
+              </button>
             </div>
           )}
         </div>
