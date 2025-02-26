@@ -13,6 +13,7 @@ export const menuItems = [
     { label: 'Contacts', href: '/admin/contacts' },
     { label: 'Training Programs', href: '/admin/training-programs' },
     { label: 'Blogs', href: '/admin/blogs' },
+    { label: 'Statistics', href: '/admin/statistics' },
 ];
 
 export default function NavBar() {

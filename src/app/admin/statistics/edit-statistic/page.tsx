@@ -13,7 +13,6 @@ export default function EditBlog() {
   const [formData, setFormData] = useState({
       title: '',
       link: '',
-      image: '',
   });
   const [loading, setLoading] = useState(true);
 
@@ -35,7 +34,6 @@ export default function EditBlog() {
           setFormData({
             title: blogData.title || '',
             link: blogData.link || '',
-            image: blogData.image || '',
           });
         } else {
           console.error('Blog not found in the database');

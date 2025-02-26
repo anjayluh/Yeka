@@ -36,20 +36,32 @@ export default function HomePage() {
 
   const images = [
     {
-      src: "/images/pexels-d-minh-ha-tu-n-2147504760-29709714.jpg",
-      alt: "Helping Farmers Grow",
-    },
-    {
       src: "/images/pexels-magda-ehlers-pexels-1300375.jpg",
       alt: "Farm Sustainability",
+      text: "Use Waste from your house or farm to make feed for your poultry, pigs and fish using Black Soldier Fly Larvae",
+      buttonText: "Apply for training",
+      link: "#services"
     },
     {
-      src: "/images/pexels-theplanetspeaks-12349154.jpg",
+      src: "/images/black-soldier-fly-starter-pack.webp",
+      alt: "Helping Farmers Grow",
+      text: "Get your Black Soldier Fly Unit Starter Pack: Love Cage, Pupae, Eggs, 5DOL, Containers",
+      buttonText: "Buy Now",
+      link: "https://yeka-organic-farms.vendblue.store/"
+    },
+    {
+      src: "/images/black-soldier-fly.png",
       alt: "Agricultural Innovation",
+      text: "Follow the Step by Step Guide to Raise your own Black Soldier Fly Larvae",
+      buttonText: "Download Now",
+      link: "https://yeka-organic-farms.vendblue.store/"
     },
     {
-      src: "/images/pexels-mibernaa-21764384.jpg",
+      src: "/images/yogyakarta-indonesia-03222022-woman-taking-600nw-2141961301.webp",
       alt: "Sustainable Farming Practices",
+      text: "Join our Global Community of BSF practicing Farmers",
+      buttonText: "Join Now",
+      link: "#footer"
     },
   ];
 
@@ -134,7 +146,6 @@ export default function HomePage() {
     fetchTrainingPrograms();
     fetchBlogs();
   }, []);
-
 
   const handleProgramClick = (program: any) => {
     setSelectedProgram(program);
@@ -278,8 +289,8 @@ export default function HomePage() {
               <Image
                 src={img.src}
                 alt={img.alt}
-                layout="fill" /* Ensures it covers the div */
-                objectFit="cover" /* Maintains aspect ratio and covers the area */
+                layout="fill"
+                objectFit="cover"
                 className="w-full h-full"
               />
             </div>
@@ -450,7 +461,7 @@ export default function HomePage() {
                   {blogs.length != 0 ? blogs.map((blog) => (
 
                     <ImageCard key={blog.id}
-                      title={blog.title} link={blog.link} />
+                      title={blog.title} link={blog.link} image={blog.image} />
 
                   )) : <h1 className='text-center'>No Blogs Published Yet. Coming soon.</h1>}
                 </div>
@@ -505,7 +516,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-green-700 text-white py-8">
+      <footer id="footer" className="bg-green-700 text-white py-8">
         <div className="container mx-auto text-center">
           <p>© 2025 Yeka Organic Farms</p>
           <p>Phone: (+256) 778633688 | Email: yeka.abel@gmail.com</p>
