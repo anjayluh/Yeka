@@ -256,8 +256,8 @@ console.log(statistics, 'statistics')
     <main className="min-h-screen w-full w-100 bg-gradient-to-b from-green-100 via-white to-green-50 home-page">
       {/* Navigation */}
       <header
-        className={`fixed top-0 left-0 w-full z-50 text-green-700 text-2xl transition-all duration-300 ${isScrolled ? "bg-white shadow-md" : "bg-transparent"
-          }`}
+        className={`fixed top-0 left-0 w-full z-50 text-2xl transition-all duration-300
+           ${isScrolled ? "bg-white shadow-md text-green-700" : "bg-transparent text-white"}`}
       >
         <div className=" mx-auto flex items-center justify-between py-4 px-6">
           {/* Logo */}
@@ -271,7 +271,7 @@ console.log(statistics, 'statistics')
 
           {/* Hamburger Icon (Only visible on mobile) */}
           <button
-            className="lg:hidden block text-green-700 text-3xl"
+            className="lg:hidden block text-white text-3xl"
             onClick={toggleMenu}
           >
             &#9776; {/* Hamburger icon */}
