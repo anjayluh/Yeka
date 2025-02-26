@@ -15,6 +15,7 @@ import { Inter } from 'next/font/google'
 import { PiPlantFill } from "react-icons/pi";
 import RandomIcon from '@/components/shared/RandomIcon';
 import ImageCard from '@/components/shared/ImageCard';
+import Banner  from '@/components/shared/Banner';
 
 
 const inter = Inter({
@@ -23,53 +24,7 @@ const inter = Inter({
 })
 
 export default function HomePage() {
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 250,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 1500,
-    beforeChange: (_, next) => setCurrentSlide(next),
-  };
 
-  const sliderImages = [
-    {
-      src: "/images/pexels-magda-ehlers-pexels-1300375.jpg",
-      alt: "Farm Sustainability",
-      heading: "Use Waste from your house or farm",
-      description: "Make feed for your poultry, pigs and fish using Black Soldier Fly Larvae",
-      buttonText: "Apply for training",
-      link: "#services"
-    },
-    {
-      src: "/images/black-soldier-fly-starter-pack.webp",
-      alt: "Helping Farmers Grow",
-      heading: "Get your Black Soldier Fly Unit Starter Pack",
-      description: "Love Cage, Pupae, Eggs, 5DOL, Containers",
-      buttonText: "Buy Now",
-      link: "https://yeka-organic-farms.vendblue.store/"
-    },
-    {
-      src: "/images/black-soldier-fly.png",
-      alt: "Agricultural Innovation",
-      heading: "Raise your own Black Soldier Fly",
-      description: "Follow the Step by Step Guide to Raise your own Black Soldier Fly Larvae",
-      buttonText: "Download Now",
-      link: "https://yeka-organic-farms.vendblue.store/"
-    },
-    {
-      src: "/images/yogyakarta-indonesia-03222022-woman-taking-600nw-2141961301.webp",
-      alt: "Sustainable Farming Practices",
-      heading: "Global Community",
-      description: "Join our Global Community of BSF practicing Farmers",
-      buttonText: "Join Now",
-      link: "#footer"
-    },
-  ];
-
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [programs, setPrograms] = useState<any[]>([]);
   const [programsLoading, setProgramsLoading] = useState(true);
   const [statisticsLoading, setStatisticsLoading] = useState(true);
@@ -299,33 +254,7 @@ export default function HomePage() {
       </header>
 
       {/* Slider Section */}
-      <section id='about' className="w-screen h-[900px]  relative overflow-x-hidden">
-        <Slider {...sliderSettings}>
-          {sliderImages.map((img, index) => (
-            <div key={index} className="relative w-screen h-[900px]">
-              <Image
-                src={img.src}
-                alt={img.alt}
-                layout="fill"
-                objectFit="cover"
-                className="w-full h-full"
-              />
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-30 text-center text-white">
-                <h1 className="text-3xl md:text-7xl font-bold my-5">{img.heading}</h1>
-                <p className="mt-4 text-l md:text-2xl my-5">{img.description}</p>
-                <div className="mt-9 flex gap-4">
-                  <a
-                    href={img.link}
-                    className="px-6 py-3 bg-yellow-500 text-black text-xl font-semibold rounded shadow hover:bg-yellow-900"
-                  >
-                    {img.buttonText}
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
-        </Slider>
-      </section>
+      <Banner />
 
       {/* Statistics Section */}
       <section id="about" className="container mx-auto py-12 text-center my-9">
