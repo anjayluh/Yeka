@@ -26,40 +26,44 @@ export default function HomePage() {
   const sliderSettings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 250,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 1500,
     beforeChange: (_, next) => setCurrentSlide(next),
   };
 
-  const images = [
+  const sliderImages = [
     {
       src: "/images/pexels-magda-ehlers-pexels-1300375.jpg",
       alt: "Farm Sustainability",
-      text: "Use Waste from your house or farm to make feed for your poultry, pigs and fish using Black Soldier Fly Larvae",
+      heading: "Use Waste from your house or farm",
+      description: "Make feed for your poultry, pigs and fish using Black Soldier Fly Larvae",
       buttonText: "Apply for training",
       link: "#services"
     },
     {
       src: "/images/black-soldier-fly-starter-pack.webp",
       alt: "Helping Farmers Grow",
-      text: "Get your Black Soldier Fly Unit Starter Pack: Love Cage, Pupae, Eggs, 5DOL, Containers",
+      heading: "Get your Black Soldier Fly Unit Starter Pack",
+      description: "Love Cage, Pupae, Eggs, 5DOL, Containers",
       buttonText: "Buy Now",
       link: "https://yeka-organic-farms.vendblue.store/"
     },
     {
       src: "/images/black-soldier-fly.png",
       alt: "Agricultural Innovation",
-      text: "Follow the Step by Step Guide to Raise your own Black Soldier Fly Larvae",
+      heading: "Raise your own Black Soldier Fly",
+      description: "Follow the Step by Step Guide to Raise your own Black Soldier Fly Larvae",
       buttonText: "Download Now",
       link: "https://yeka-organic-farms.vendblue.store/"
     },
     {
       src: "/images/yogyakarta-indonesia-03222022-woman-taking-600nw-2141961301.webp",
       alt: "Sustainable Farming Practices",
-      text: "Join our Global Community of BSF practicing Farmers",
+      heading: "Global Community",
+      description: "Join our Global Community of BSF practicing Farmers",
       buttonText: "Join Now",
       link: "#footer"
     },
@@ -251,7 +255,7 @@ export default function HomePage() {
   const isBlogLeftArrowDisabled = blogScrollPosition <= 0;
   const isBlogRightArrowDisabled =
     blogs.length < 5 || blogScrollPosition >= (blogs.length - 4) * 264;
-console.log(statistics, 'statistics')
+
   return (
     <main className="min-h-screen w-full w-100 bg-gradient-to-b from-green-100 via-white to-green-50 home-page">
       {/* Navigation */}
@@ -297,7 +301,7 @@ console.log(statistics, 'statistics')
       {/* Slider Section */}
       <section id='about' className="w-screen h-[900px]  relative overflow-x-hidden">
         <Slider {...sliderSettings}>
-          {images.map((img, index) => (
+          {sliderImages.map((img, index) => (
             <div key={index} className="relative w-screen h-[900px]">
               <Image
                 src={img.src}
@@ -306,38 +310,27 @@ console.log(statistics, 'statistics')
                 objectFit="cover"
                 className="w-full h-full"
               />
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-30 text-center text-white">
+                <h1 className="text-3xl md:text-7xl font-bold my-5">{img.heading}</h1>
+                <p className="mt-4 text-l md:text-2xl my-5">{img.description}</p>
+                <div className="mt-9 flex gap-4">
+                  <a
+                    href={img.link}
+                    className="px-6 py-3 bg-yellow-500 text-black text-xl font-semibold rounded shadow hover:bg-yellow-900"
+                  >
+                    {img.buttonText}
+                  </a>
+                </div>
+              </div>
             </div>
           ))}
         </Slider>
-
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-30 text-center text-white">
-          <h1 className="text-5xl  md:text-7xl font-bold my-5">
-            Saving Costs For Farmers
-          </h1>
-          <p className="mt-4 text-xl  md:text-3xl my-5">
-            Helping Farmers turn waste into feed for Poultry, Pigs, and Fish
-          </p>
-          <div className="mt-9 flex gap-4">
-            <a
-              href="#contact-us"
-              className="px-6 py-3 bg-yellow-500 text-black text-xl font-semibold rounded shadow hover:bg-yellow-900"
-            >
-              Contact Us
-            </a>
-            <a
-              href="#services"
-              className="px-6 py-3 bg-white text-green-700 font-semibold rounded shadow hover:bg-green-100"
-            >
-              Read More
-            </a>
-          </div>
-        </div>
       </section>
 
       {/* Statistics Section */}
       <section id="about" className="container mx-auto py-12 text-center my-9">
-    <SectionHeader title={'Why Choose Us'} />
-    <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <SectionHeader title={'Why Choose Us'} />
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           {statistics.map((stat) => (
             <div key={stat.id}>
               <h3 className="text-3xl font-bold text-yellow-500">{animatedNumbers[stat.name] !== undefined
