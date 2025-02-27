@@ -12,8 +12,9 @@ export default function AddBlog() {
     const blogData = {
       title: blog.title,
       link: blog.link,
+      image: blog.image,
     };
-    if (!blogData.title || !blogData.link) {
+    if (!blogData.title || !blogData.link || !blogData.image) {
       return;
     }
 

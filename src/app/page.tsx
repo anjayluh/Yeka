@@ -6,15 +6,18 @@ import { useState, useEffect, useRef } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
 import Image from 'next/image';
-import Slider from 'react-slick';
 import { Link as ScrollLink } from 'react-scroll';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import SectionHeader from '@/components/SectionHeader';
 import { Inter } from 'next/font/google'
-import { PiPlantFill } from "react-icons/pi";
 import RandomIcon from '@/components/shared/RandomIcon';
 import ImageCard from '@/components/shared/ImageCard';
+import Banner  from '@/components/shared/Banner';
+import ContactUs from '@/components/ContactUs';
+<<<<<<< Updated upstream
+=======
+import Header from '@/components/shared/Header';
+>>>>>>> Stashed changes
+import Footer from '@/components/shared/Footer';
 
 
 const inter = Inter({
@@ -23,52 +26,20 @@ const inter = Inter({
 })
 
 export default function HomePage() {
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    beforeChange: (_, next) => setCurrentSlide(next),
-  };
 
-  const images = [
-    {
-      src: "/images/pexels-d-minh-ha-tu-n-2147504760-29709714.jpg",
-      alt: "Helping Farmers Grow",
-    },
-    {
-      src: "/images/pexels-magda-ehlers-pexels-1300375.jpg",
-      alt: "Farm Sustainability",
-    },
-    {
-      src: "/images/pexels-theplanetspeaks-12349154.jpg",
-      alt: "Agricultural Innovation",
-    },
-    {
-      src: "/images/pexels-mibernaa-21764384.jpg",
-      alt: "Sustainable Farming Practices",
-    },
-  ];
-
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [programs, setPrograms] = useState<any[]>([]);
   const [programsLoading, setProgramsLoading] = useState(true);
+  const [statisticsLoading, setStatisticsLoading] = useState(true);
   const [blogsLoading, setBlogsLoading] = useState(true);
   const [selectedProgram, setSelectedProgram] = useState<any | null>(null);
   const [serviceScrollPosition, setServiceScrollPosition] = useState(0);
   const servicesContainerRef = useRef<HTMLDivElement>(null);
   const [blogScrollPosition, setBlogScrollPosition] = useState(0);
   const blogContainerRef = useRef<HTMLDivElement>(null);
-  const [animatedNumbers, setAnimatedNumbers] = useState({
-    experience: 0,
-    customers: 0,
-    awards: 0,
-  });
-
+  const [animatedNumbers, setAnimatedNumbers] = useState<any>({});
   const [blogs, setBlogs] = useState<any[]>([]);
+  const [statistics, setStatistics] = useState<any[]>([]);
+<<<<<<< Updated upstream
   const [isScrolled, setIsScrolled] = useState(false);
   const shopLink = 'https://yeka-organic-farms.vendblue.store/'
 
@@ -86,18 +57,13 @@ export default function HomePage() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+=======
+>>>>>>> Stashed changes
 
   const targetNumbers = {
     experience: 25,
     customers: 250,
     awards: 2,
-  };
-
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(prevState => !prevState);
   };
 
   useEffect(() => {
@@ -131,10 +97,25 @@ export default function HomePage() {
       }
     };
 
+    const fetchStatistics = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'Statistics'));
+        const statisticsData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setStatistics(statisticsData);
+      } catch (error) {
+        console.error('Error fetching statistics:', error);
+      } finally {
+        setStatisticsLoading(false);
+      }
+    };
+
     fetchTrainingPrograms();
     fetchBlogs();
+    fetchStatistics();
   }, []);
-
 
   const handleProgramClick = (program: any) => {
     setSelectedProgram(program);
@@ -184,15 +165,14 @@ export default function HomePage() {
         direction === 'left'
           ? Math.max(0, blogScrollPosition - scrollAmount)
           : blogScrollPosition + scrollAmount;
-      setServiceScrollPosition(newScrollPosition);
+      setBlogScrollPosition(newScrollPosition);
       container.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
     }
   };
 
+  // Animate the statistics numbers
   useEffect(() => {
-    const animateValue = (key: keyof typeof targetNumbers, duration = 2000) => {
-      const start = 0;
-      const end = targetNumbers[key];
+    const animateValue = (key: string, startValue: number, endValue: number, duration = 2000) => {
       const startTime = performance.now();
 
       const updateNumber = (currentTime: number) => {
@@ -201,13 +181,13 @@ export default function HomePage() {
           const progress = Math.min(elapsedTime / duration, 1);
           setAnimatedNumbers((prev) => ({
             ...prev,
-            [key]: Math.floor(progress * (end - start) + start),
+            [key]: Math.floor(progress * (endValue - startValue) + startValue),
           }));
           requestAnimationFrame(updateNumber);
         } else {
           setAnimatedNumbers((prev) => ({
             ...prev,
-            [key]: end,
+            [key]: endValue,
           }));
         }
       };
@@ -215,10 +195,11 @@ export default function HomePage() {
       requestAnimationFrame(updateNumber);
     };
 
-    Object.keys(targetNumbers).forEach((key) => {
-      animateValue(key as keyof typeof targetNumbers);
+    statistics.forEach((stat) => {
+      animateValue(stat.name, 0, stat.value);
     });
-  }, []);
+  }, [statistics]);
+
 
   const isServiceLeftArrowDisabled = serviceScrollPosition <= 0;
   const isServiceRightArrowDisabled =
@@ -226,14 +207,15 @@ export default function HomePage() {
 
   const isBlogLeftArrowDisabled = blogScrollPosition <= 0;
   const isBlogRightArrowDisabled =
-    programs.length < 5 || blogScrollPosition >= (programs.length - 4) * 264;
+    blogs.length < 5 || blogScrollPosition >= (blogs.length - 4) * 264;
 
   return (
     <main className="min-h-screen w-full w-100 bg-gradient-to-b from-green-100 via-white to-green-50 home-page">
       {/* Navigation */}
+<<<<<<< Updated upstream
       <header
-        className={`fixed top-0 left-0 w-full z-50 text-white text-2xl transition-all duration-300 ${isScrolled ? "bg-green-700 shadow-md" : "bg-transparent"
-          }`}
+        className={`fixed top-0 left-0 w-full z-50 text-2xl transition-all duration-300
+           ${isScrolled ? "bg-white shadow-md text-green-700" : "bg-transparent text-white"}`}
       >
         <div className=" mx-auto flex items-center justify-between py-4 px-6">
           {/* Logo */}
@@ -254,7 +236,7 @@ export default function HomePage() {
           </button>
 
           {/* Navigation */}
-          <nav className={`lg:flex gap-6 ${isMenuOpen ? 'left-0 flex flex-col absolute top-20 bg-green-700 w-full py-6' : 'hidden lg:flex'}`}>
+          <nav className={`lg:flex gap-6 ${isMenuOpen ? 'left-0 flex flex-col absolute top-20 bg-white w-full py-6' : 'hidden lg:flex'}`}>
             {['Home', 'About', 'Services', 'Shop', 'Blogs', 'Contact Us'].map((item, index) => (
               <a
                 key={index}
@@ -269,74 +251,35 @@ export default function HomePage() {
           </nav>
         </div>
       </header>
+=======
+      <Header />
+>>>>>>> Stashed changes
 
       {/* Slider Section */}
-      <section id='about' className="w-screen h-[900px]  relative overflow-x-hidden">
-        <Slider {...sliderSettings}>
-          {images.map((img, index) => (
-            <div key={index} className="relative w-screen h-[900px]">
-              <Image
-                src={img.src}
-                alt={img.alt}
-                layout="fill" /* Ensures it covers the div */
-                objectFit="cover" /* Maintains aspect ratio and covers the area */
-                className="w-full h-full"
-              />
-            </div>
-          ))}
-        </Slider>
-
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-30 text-center text-white">
-          <h1 className="text-5xl  md:text-7xl font-bold my-5">
-            Saving Costs For Farmers
-          </h1>
-          <p className="mt-4 text-xl  md:text-3xl my-5">
-            Helping Farmers turn waste into feed for Poultry, Pigs, and Fish
-          </p>
-          <div className="mt-9 flex gap-4">
-            <a
-              href="#contact-us"
-              className="px-6 py-3 bg-yellow-500 text-black text-xl font-semibold rounded shadow hover:bg-yellow-900"
-            >
-              Contact Us
-            </a>
-            <a
-              href="#services"
-              className="px-6 py-3 bg-white text-green-700 font-semibold rounded shadow hover:bg-green-100"
-            >
-              Read More
-            </a>
-          </div>
-        </div>
-      </section>
+      <Banner />
 
       {/* Statistics Section */}
       <section id="about" className="container mx-auto py-12 text-center my-9">
         <SectionHeader title={'Why Choose Us'} />
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h3 className="text-3xl font-bold text-yellow-500">{animatedNumbers.experience}+</h3>
-            <p className="my-3">Years of Experience</p>
-          </div>
-          <div>
-            <h3 className="text-4xl font-bold text-yellow-500">{animatedNumbers.customers}+</h3>
-            <p className='my-3'>Happy Customers</p>
-          </div>
-          <div>
-            <h3 className="text-4xl font-bold text-yellow-500">{animatedNumbers.awards}+</h3>
-            <p className='my-3'>Awards Won</p>
-          </div>
+          {statistics.map((stat) => (
+            <div key={stat.id}>
+              <h3 className="text-3xl font-bold text-yellow-500">{animatedNumbers[stat.name] !== undefined
+                ? animatedNumbers[stat.name]
+                : 0}+</h3>
+              <p className="my-3">{stat.name}</p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Services Section */}
-
       <section id="services" className="bg-green-50 py-12">
         <div className="container mx-auto scrollbar-thin scrollbar-thumb-green-700">
           <SectionHeader title={'Our Services'} />
           {programsLoading ?
             <div className="flex justify-center items-center py-12 ">
-              <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full"></div>
+              <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full" />
             </div>
             :
             <div className="mt-8 relative mx-2">
@@ -351,7 +294,7 @@ export default function HomePage() {
                 </button>
                 <div
                   ref={servicesContainerRef}
-                  className="flex overflow-x-auto gap-8 max-w-4xl mx-auto"
+                  className="flex overflow-x-auto gap-4 scrollbar-hide scroll-smooth snap-x"
                 >
                   {programs.map((program) => (
                     <div
@@ -433,84 +376,50 @@ export default function HomePage() {
               <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full"></div>
             </div>
           ) : (
-            <div className="relative mt-8">
-              <div className="flex justify-center">
-                <button
-                  onClick={() => handleBlogScroll('left')}
-                  disabled={isBlogLeftArrowDisabled}
-                  className={`absolute left-0 top-1/2 transform -translate-y-1/2 bg-green-700 text-white px-2 py-1 rounded-full z-10 ${isBlogLeftArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-800'}`}
-                >
-                  &larr;
-                </button>
-                <div
-                  ref={blogContainerRef}
-                  className="flex overflow-x-auto gap-8 max-w-4xl mx-auto scrollbar-thin scrollbar-thumb-green-700 scrollbar-track-green-200"
-                >
-
-                  {blogs.length != 0 ? blogs.map((blog) => (
-
-                    <ImageCard key={blog.id}
-                      title={blog.title} link={blog.link} />
-
-                  )) : <h1 className='text-center'>No Blogs Published Yet. Coming soon.</h1>}
-                </div>
-                <button
-                  onClick={() => handleBlogScroll('right')}
-                  disabled={isBlogRightArrowDisabled}
-                  className={`absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-700 text-white px-2 py-1 rounded-full z-10 ${isBlogRightArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-800'}`}
-                >
-                  &rarr;
-                </button>
+            <div className="relative w-full">
+              {/* Left Scroll Button */}
+              <button
+                className={`absolute left-0 top-1/2 transform -translate-y-1/2 bg-white shadow-md px-2 py-1 rounded-full ${isBlogLeftArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
+                onClick={() => handleBlogScroll('left')}
+                disabled={isBlogLeftArrowDisabled}
+              >
+                ←
+              </button>
+              <div
+                ref={blogContainerRef}
+                className="flex overflow-x-auto gap-4 scrollbar-hide scroll-smooth snap-x"
+                style={{ scrollBehavior: 'smooth' }}
+              >
+                {blogs.map((blog) => (
+                  <div key={blog.id} className="snap-start w-[264px] flex-shrink-0">
+                    <ImageCard
+                      image={blog.image}
+                      title={blog.title}
+                      description={blog.description}
+                      onClick={() => handleBlogClick(blog)}
+                    />
+                  </div>
+                ))}
               </div>
+
+              {/* Right Scroll Button */}
+              <button
+                className={`absolute right-0 top-1/2 transform -translate-y-1/2 bg-white shadow-md px-2 py-1 rounded-full ${isBlogRightArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
+                onClick={() => handleBlogScroll('right')}
+                disabled={isBlogRightArrowDisabled}
+              >
+                →
+              </button>
             </div>
           )}
         </div>
       </section>
 
       {/* Contact Form Section */}
-      <section id="contact-us" className="container mx-auto py-12">
-        <SectionHeader title={'Contact Us'} />
-        <form className="mt-8 max-w-2xl mx-auto">
-          <div className="grid mx-8 grid-cols-1 gap-6">
-            <input
-              type="text"
-              placeholder="Name"
-              required
-              className="px-4 py-2 border rounded-md"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              required
-              className="px-4 py-2 border rounded-md"
-            />
-            <input
-              type="tel"
-              placeholder="Phone"
-              className="px-4 py-2 border rounded-md"
-            />
-            <textarea
-              placeholder="Message"
-              required
-              className="px-4 py-2 border rounded-md"
-            ></textarea>
-            <button
-              type="submit"
-              className="w-full bg-[#85a900] text-white py-2 rounded-md hover:bg-[#879d00]"
-            >
-              Send
-            </button>
-          </div>
-        </form>
-      </section>
+      <ContactUs/>
 
       {/* Footer */}
-      <footer className="bg-green-700 text-white py-8">
-        <div className="container mx-auto text-center">
-          <p>© 2025 Yeka Organic Farms</p>
-          <p>Phone: (+256) 778633688 | Email: yeka.abel@gmail.com</p>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

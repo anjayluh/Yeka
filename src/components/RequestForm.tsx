@@ -3,63 +3,65 @@
 import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-interface BlogFormProps {
+interface RequestFormProps {
   initialData?: {
-    title: string;
-    link: string;
-    image: string;
+    name: string;
+    email: string;
+    phone: string;
+    message: string;
   };
-  onSubmit: (blog: any) => void;
+  onSubmit: (request: any) => void;
   formTitle: string;
   submitButtonText: string;
 }
 
-const BlogForm = ({
+const RequestForm = ({
   initialData = {
-    title: '',
-    link: '',
-    image: '',
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
   },
   onSubmit,
   formTitle,
   submitButtonText,
-}: BlogFormProps) => {
-  const [blog, setBlog] = useState(initialData);
+}: RequestFormProps) => {
+  const [request, setRequest] = useState(initialData);
   const [isFormChanged, setIsFormChanged] = useState(false);
   const router = useRouter();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setBlog((prev) => {
-      const updatedBlog = {
+    setRequest((prev) => {
+      const updatedRequest = {
         ...prev,
         [name]: value,
       };
-      checkIfFormChanged(updatedBlog);
-      return updatedBlog;
+      checkIfFormChanged(updatedRequest);
+      return updatedRequest;
     });
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!blog.title || !blog.link || !blog.image) {
-      console.error('Title, link and image are required fields are required fields');
+    if (!request.name) {
+      console.error('Name is a required fields are required fields');
       return;
     }
-    onSubmit(blog);
+    onSubmit(request);
   };
 
   const handleCancel = () => {
     router.back();
   };
 
-  const checkIfFormChanged = (updatedBlog: any) => {
-    setIsFormChanged(JSON.stringify(updatedBlog) !== JSON.stringify(initialData));
+  const checkIfFormChanged = (updatedRequest: any) => {
+    setIsFormChanged(JSON.stringify(updatedRequest) !== JSON.stringify(initialData));
   };
 
   useEffect(() => {
-    checkIfFormChanged(blog);
-  }, [blog]);
+    checkIfFormChanged(request);
+  }, [request]);
 
 
   return (
@@ -67,48 +69,66 @@ const BlogForm = ({
       <div className="w-[90%] p-6 max-w-lg bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold mb-4">{formTitle}</h2>
         <form onSubmit={handleSubmit}>
+
+
           <div className="mb-4">
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-              Title
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              Full Name
             </label>
             <input
-              id="title"
+              id="name"
               type="text"
-              name="title"
-              value={blog.title}
+              name="name"
+              value={request.name}
               onChange={handleInputChange}
-              placeholder="Title"
+              placeholder="Name"
               className="w-full p-2 border border-gray-300 rounded-md"
             />
           </div>
 
           <div className="mb-4">
-            <label htmlFor="link" className="block text-sm font-medium text-gray-700">
-              Link
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Email
             </label>
             <input
-              id="link"
-              type="text"
-              name="link"
-              value={blog.link}
+              id="email"
+              type="email"
+              name="email"
+              value={request.email}
               onChange={handleInputChange}
-              placeholder="Link"
+              placeholder="Email"
               className="w-full p-2 border border-gray-300 rounded-md"
             />
           </div>
 
           <div className="mb-4">
-            <label htmlFor="image" className="block text-sm font-medium text-gray-700">
-              Image
+            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+              Phone
             </label>
             <input
-              id="image"
-              type="text"
-              name="image"
-              value={blog.image}
+              id="phone"
+              type="phone"
+              name="phone"
+              value={request.phone}
               onChange={handleInputChange}
-              placeholder="Image"
+              placeholder="Phone"
               className="w-full p-2 border border-gray-300 rounded-md"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+              Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              value={request.message}
+              onChange={handleInputChange}
+              placeholder="Message"
+              className="w-full p-2 border border-gray-300 rounded-md"
+              rows={4}
+              aria-label="Message"
             />
           </div>
 
@@ -138,4 +158,4 @@ const BlogForm = ({
   );
 };
 
-export default BlogForm;
+export default RequestForm;

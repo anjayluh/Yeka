@@ -3,63 +3,61 @@
 import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-interface BlogFormProps {
+interface StatisticFormProps {
   initialData?: {
-    title: string;
-    link: string;
-    image: string;
+    name: string;
+    value: number;
   };
-  onSubmit: (blog: any) => void;
+  onSubmit: (statistic: any) => void;
   formTitle: string;
   submitButtonText: string;
 }
 
-const BlogForm = ({
+const StatisticForm = ({
   initialData = {
-    title: '',
-    link: '',
-    image: '',
+    name: '',
+    value: 0,
   },
   onSubmit,
   formTitle,
   submitButtonText,
-}: BlogFormProps) => {
-  const [blog, setBlog] = useState(initialData);
+}: StatisticFormProps) => {
+  const [statistic, setStatistic] = useState(initialData);
   const [isFormChanged, setIsFormChanged] = useState(false);
   const router = useRouter();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setBlog((prev) => {
-      const updatedBlog = {
+    setStatistic((prev) => {
+      const updatedStatistic = {
         ...prev,
         [name]: value,
       };
-      checkIfFormChanged(updatedBlog);
-      return updatedBlog;
+      checkIfFormChanged(updatedStatistic);
+      return updatedStatistic;
     });
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!blog.title || !blog.link || !blog.image) {
-      console.error('Title, link and image are required fields are required fields');
+    if (!statistic.name || !statistic.value) {
+      console.error('Name and value are required fields are required fields');
       return;
     }
-    onSubmit(blog);
+    onSubmit(statistic);
   };
 
   const handleCancel = () => {
     router.back();
   };
 
-  const checkIfFormChanged = (updatedBlog: any) => {
-    setIsFormChanged(JSON.stringify(updatedBlog) !== JSON.stringify(initialData));
+  const checkIfFormChanged = (updatedStatistic: any) => {
+    setIsFormChanged(JSON.stringify(updatedStatistic) !== JSON.stringify(initialData));
   };
 
   useEffect(() => {
-    checkIfFormChanged(blog);
-  }, [blog]);
+    checkIfFormChanged(statistic);
+  }, [statistic]);
 
 
   return (
@@ -68,46 +66,31 @@ const BlogForm = ({
         <h2 className="text-2xl font-bold mb-4">{formTitle}</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-              Title
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              Name
             </label>
             <input
-              id="title"
+              id="name"
               type="text"
-              name="title"
-              value={blog.title}
+              name="name"
+              value={statistic.name}
               onChange={handleInputChange}
-              placeholder="Title"
+              placeholder="Name"
               className="w-full p-2 border border-gray-300 rounded-md"
             />
           </div>
 
           <div className="mb-4">
-            <label htmlFor="link" className="block text-sm font-medium text-gray-700">
-              Link
+            <label htmlFor="value" className="block text-sm font-medium text-gray-700">
+              Value
             </label>
             <input
-              id="link"
+              id="value"
               type="text"
-              name="link"
-              value={blog.link}
+              name="value"
+              value={statistic.value}
               onChange={handleInputChange}
-              placeholder="Link"
-              className="w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="image" className="block text-sm font-medium text-gray-700">
-              Image
-            </label>
-            <input
-              id="image"
-              type="text"
-              name="image"
-              value={blog.image}
-              onChange={handleInputChange}
-              placeholder="Image"
+              placeholder="Value"
               className="w-full p-2 border border-gray-300 rounded-md"
             />
           </div>
@@ -138,4 +121,4 @@ const BlogForm = ({
   );
 };
 
-export default BlogForm;
+export default StatisticForm;

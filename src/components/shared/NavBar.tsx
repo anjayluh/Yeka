@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,6 +11,8 @@ export const menuItems = [
     { label: 'Contacts', href: '/admin/contacts' },
     { label: 'Training Programs', href: '/admin/training-programs' },
     { label: 'Blogs', href: '/admin/blogs' },
+    { label: 'Statistics', href: '/admin/statistics' },
+    { label: 'Contact Requests', href: '/admin/contact-requests' },
 ];
 
 export default function NavBar() {
