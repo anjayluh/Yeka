@@ -332,6 +332,7 @@ export default function HomePage() {
                       image={blog.image}
                       title={blog.title}
                       description={blog.description}
+                      link={blog.link}
                       onClick={() => handleBlogClick(blog)}
                     />
                   </div>
