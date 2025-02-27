@@ -14,6 +14,7 @@ import RandomIcon from '@/components/shared/RandomIcon';
 import ImageCard from '@/components/shared/ImageCard';
 import Banner  from '@/components/shared/Banner';
 import ContactUs from '@/components/ContactUs';
+import Footer from '@/components/shared/Footer';
 
 
 const inter = Inter({
@@ -416,12 +417,7 @@ export default function HomePage() {
       <ContactUs/>
 
       {/* Footer */}
-      <footer id="footer" className="bg-green-700 text-white py-8">
-        <div className="container mx-auto text-center">
-          <p>© 2025 Yeka Organic Farms</p>
-          <p>Phone: (+256) 778633688 | Email: yeka.abel@gmail.com</p>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
