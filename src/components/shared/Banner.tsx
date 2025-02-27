@@ -1,18 +1,13 @@
 
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '@/utils/firebase';
+import { useState } from 'react';
 import Image from 'next/image';
 import Slider from 'react-slick';
 import { Link as ScrollLink } from 'react-scroll';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import SectionHeader from '@/components/SectionHeader';
-import { Inter } from 'next/font/google'
-import { PiPlantFill } from "react-icons/pi";
-import RandomIcon from '@/components/shared/RandomIcon';
 import ImageCard from '@/components/shared/ImageCard';
 import { sliderImages } from '@/utils/constants';
 
@@ -38,9 +33,8 @@ export default function Banner() {
                         <Image
                             src={img.src}
                             alt={img.alt}
-                            layout="fill"
-                            objectFit="cover"
-                            className="w-full h-full"
+                            fill
+                            className="object-cover w-full h-full"
                         />
                         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-30 text-center text-white">
                             <h1 className="text-3xl md:text-7xl font-bold my-5">{img.heading}</h1>

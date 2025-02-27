@@ -3,36 +3,35 @@
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
 import { useRouter } from 'next/navigation';
-import ProgramForm from '@/components/ProgramForm';
+import RequestForm from '@/components/RequestForm';
 
-export default function AddTrainingProgram() {
+export default function AddTrainingRequest() {
   const router = useRouter();
 
-  const handleSubmit = async (program: any) => {
-    const programData = {
-      mode: program.mode,
-      message: program.message,
-      activities: program.activities,
-      bonus_materials: program.bonus_materials,
-      time_frame: program.time_frame,
-      fee: program.fee,
+  const handleSubmit = async (contact: any) => {
+    const requestData = {
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone,
+      message: contact.message,
     };
-    if (!programData.mode) {
+    if (!requestData.name || !requestData.email || !requestData.phone) {
+      console.error('Name and email and phone are required fields are required fields');
       return;
-    }
+  }
 
     try {
-      await addDoc(collection(db, 'Training Programs'), programData);
-      router.push('/admin/training-programs');
+      await addDoc(collection(db, 'Contact Requests'), requestData);
+      router.push('/admin/contact-requests');
     } catch (error) {
-      console.error('Error adding program:', error);
+      console.error('Error adding request:', error);
     }
   };
 
   return (
-    <ProgramForm
+    <RequestForm
       onSubmit={handleSubmit}
-      formTitle="Add New Training Program"
+      formTitle="Add New Training Request"
       submitButtonText="Save"
     />
   );

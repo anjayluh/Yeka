@@ -8,14 +8,12 @@ import { db } from '@/utils/firebase';
 import Image from 'next/image';
 import Slider from 'react-slick';
 import { Link as ScrollLink } from 'react-scroll';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import SectionHeader from '@/components/SectionHeader';
 import { Inter } from 'next/font/google'
-import { PiPlantFill } from "react-icons/pi";
 import RandomIcon from '@/components/shared/RandomIcon';
 import ImageCard from '@/components/shared/ImageCard';
 import Banner  from '@/components/shared/Banner';
+import ContactUs from '@/components/ContactUs';
 
 
 const inter = Inter({
@@ -415,41 +413,7 @@ export default function HomePage() {
       </section>
 
       {/* Contact Form Section */}
-      <section id="contact-us" className="container mx-auto py-12">
-        <SectionHeader title={'Contact Us'} />
-        <form className="mt-8 max-w-2xl mx-auto">
-          <div className="grid mx-8 grid-cols-1 gap-6">
-            <input
-              type="text"
-              placeholder="Name"
-              required
-              className="px-4 py-2 border rounded-md"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              required
-              className="px-4 py-2 border rounded-md"
-            />
-            <input
-              type="tel"
-              placeholder="Phone"
-              className="px-4 py-2 border rounded-md"
-            />
-            <textarea
-              placeholder="Message"
-              required
-              className="px-4 py-2 border rounded-md"
-            ></textarea>
-            <button
-              type="submit"
-              className="w-full bg-[#85a900] text-white py-2 rounded-md hover:bg-[#879d00]"
-            >
-              Send
-            </button>
-          </div>
-        </form>
-      </section>
+      <ContactUs/>
 
       {/* Footer */}
       <footer id="footer" className="bg-green-700 text-white py-8">
