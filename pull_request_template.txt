@@ -1,0 +1,28 @@
+<type>(<scope>): <subject>
+
+Motivation
+<why this change is needed and expected results>
+
+Implementation
+<how the change was achieved>
+
+Multiple Geography Considerations.
+<differences in implementations or other considerations arising from support across multiple geographies.>
+
+Validation
+  - approx % code run via unit tests or storybook (_%)
+    - <notes>
+  - approx % code run through manual QA (_%)
+    - <notes>
+  - approx % code run through modifying code (_%)
+    - <notes>
+  - All of the code in this PR has been run: Yes/No
+    - <notes if No>
+
+How to test
+<Describe the prerequisites and the steps to test>
+
+Release Plan
+<any special considerations before release if applicable>
+
+Closes <PROJ-123>
