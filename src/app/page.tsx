@@ -6,7 +6,6 @@ import { useState, useEffect, useRef } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
 import Image from 'next/image';
-import Slider from 'react-slick';
 import { Link as ScrollLink } from 'react-scroll';
 import SectionHeader from '@/components/SectionHeader';
 import { Inter } from 'next/font/google'
@@ -14,6 +13,10 @@ import RandomIcon from '@/components/shared/RandomIcon';
 import ImageCard from '@/components/shared/ImageCard';
 import Banner  from '@/components/shared/Banner';
 import ContactUs from '@/components/ContactUs';
+<<<<<<< Updated upstream
+=======
+import Header from '@/components/shared/Header';
+>>>>>>> Stashed changes
 import Footer from '@/components/shared/Footer';
 
 
@@ -36,6 +39,7 @@ export default function HomePage() {
   const [animatedNumbers, setAnimatedNumbers] = useState<any>({});
   const [blogs, setBlogs] = useState<any[]>([]);
   const [statistics, setStatistics] = useState<any[]>([]);
+<<<<<<< Updated upstream
   const [isScrolled, setIsScrolled] = useState(false);
   const shopLink = 'https://yeka-organic-farms.vendblue.store/'
 
@@ -53,18 +57,13 @@ export default function HomePage() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+=======
+>>>>>>> Stashed changes
 
   const targetNumbers = {
     experience: 25,
     customers: 250,
     awards: 2,
-  };
-
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(prevState => !prevState);
   };
 
   useEffect(() => {
@@ -213,6 +212,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen w-full w-100 bg-gradient-to-b from-green-100 via-white to-green-50 home-page">
       {/* Navigation */}
+<<<<<<< Updated upstream
       <header
         className={`fixed top-0 left-0 w-full z-50 text-2xl transition-all duration-300
            ${isScrolled ? "bg-white shadow-md text-green-700" : "bg-transparent text-white"}`}
@@ -251,6 +251,9 @@ export default function HomePage() {
           </nav>
         </div>
       </header>
+=======
+      <Header />
+>>>>>>> Stashed changes
 
       {/* Slider Section */}
       <Banner />
@@ -271,7 +274,6 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
-
       <section id="services" className="bg-green-50 py-12">
         <div className="container mx-auto scrollbar-thin scrollbar-thumb-green-700">
           <SectionHeader title={'Our Services'} />
