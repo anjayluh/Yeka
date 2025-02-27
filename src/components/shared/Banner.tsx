@@ -1,9 +1,4 @@
 
-<<<<<<< Updated upstream
-'use client';
-
-=======
->>>>>>> Stashed changes
 import { useState } from 'react';
 import Image from 'next/image';
 import Slider from 'react-slick';

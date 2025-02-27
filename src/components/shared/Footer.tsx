@@ -1,8 +1,3 @@
-<<<<<<< Updated upstream
-'use client';
-
-=======
->>>>>>> Stashed changes
 import { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
@@ -52,11 +47,7 @@ export default function Footer() {
                     <p className="text-red-500">{error}</p>
                 ) : contacts.length > 0 ? (
                     <>
-<<<<<<< Updated upstream
-                        <p className="text-lg font-semibold">© 2025 Yeka Organic Farms</p>
-=======
                         <p className="text-lg font-semibold">© {new Date().getFullYear()} Yeka Organic Farms</p>
->>>>>>> Stashed changes
                         <p className="mt-2">Phone: {contacts[0].phone} | Email: {contacts[0].email}</p>
                     </>
                 ) : (
