@@ -10,7 +10,7 @@ export const sliderImages = [
       link: "#services"
     },
     {
-      src: "/images/black-soldier-fly-starter-pack.webp",
+      src: "/images/starter-pack.jpg",
       alt: "Helping Farmers Grow",
       heading: "Get your Black Soldier Fly Unit Starter Pack",
       description: "Love Cage, Pupae, Eggs, 5DOL, Containers",
