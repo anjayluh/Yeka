@@ -212,7 +212,7 @@ export default function HomePage() {
       {/* Services Section */}
       <section id="services" className="bg-green-50 py-12">
         <div className="container mx-auto scrollbar-thin scrollbar-thumb-green-700">
-          <SectionHeader title={'Our Services'} />
+          <SectionHeader title={'Our Services and Products'} />
           {programsLoading ?
             <div className="flex justify-center items-center py-12 ">
               <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full" />
@@ -312,7 +312,7 @@ export default function HomePage() {
               <div className="animate-spin h-10 w-10 border-4 border-t-green-600 border-gray-300 rounded-full"></div>
             </div>
           ) : (
-            <div className="relative w-full">
+            <div className="mt-8 relative w-full">
               {/* Left Scroll Button */}
               <button
                 className={`absolute left-0 top-1/2 transform -translate-y-1/2 bg-white shadow-md px-2 py-1 rounded-full ${isBlogLeftArrowDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}

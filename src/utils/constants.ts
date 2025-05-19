@@ -2,7 +2,7 @@
 
 export const sliderImages = [
     {
-      src: "/images/pexels-magda-ehlers-pexels-1300375.jpg",
+      src: "/images/poultry.jpeg",
       alt: "Farm Sustainability",
       heading: "Use Waste from your house or farm",
       description: "Make feed for your poultry, pigs and fish using Black Soldier Fly Larvae",
@@ -26,7 +26,7 @@ export const sliderImages = [
       link: "https://yeka-organic-farms.vendblue.store/"
     },
     {
-      src: "/images/yogyakarta-indonesia-03222022-woman-taking-600nw-2141961301.webp",
+      src: "/images/community.jpeg",
       alt: "Sustainable Farming Practices",
       heading: "Global Community",
       description: "Join our Global Community of BSF practicing Farmers",

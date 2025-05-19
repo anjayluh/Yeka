@@ -3,7 +3,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaFacebook, FaTwitter, FaInstagram, FaTiktok } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaInstagram, FaTiktok, FaXTwitter, FaLinkedin } from 'react-icons/fa6';
 
 interface Contact {
     id: string;
@@ -59,7 +59,10 @@ export default function Footer() {
                     <Link href="https://facebook.com/YekaOrganicFarms" target="_blank" aria-label="Facebook">
                         <FaFacebook className="text-white text-2xl hover:text-gray-300 transition" />
                     </Link>
-                    <Link href="https://twitter.com/YekaOrganic" target="_blank" aria-label="Twitter">
+                    <Link href="https://x.com/Yekaorganics?t=vKdSteYrNkCy-mVqzgcYmQ&s=09" target="_blank" aria-label="X (Twitter)">
+                        <FaXTwitter className="text-white text-2xl hover:text-gray-300 transition" />
+                    </Link>
+                    <Link href="https://twitter.com/YekaOrganic" target="_blank" aria-label="Old Twitter Link">
                         <FaTwitter className="text-white text-2xl hover:text-gray-300 transition" />
                     </Link>
                     <Link href="https://www.instagram.com/yekaorganicfarms" target="_blank" aria-label="Instagram">
@@ -68,7 +71,15 @@ export default function Footer() {
                     <Link href="https://www.tiktok.com/@yekaorganicfarms" target="_blank" aria-label="TikTok">
                         <FaTiktok className="text-white text-2xl hover:text-gray-300 transition" />
                     </Link>
+                    <Link
+                        href="https://www.linkedin.com/in/yeka-organic-farms-804208362?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                        target="_blank"
+                        aria-label="LinkedIn"
+                    >
+                        <FaLinkedin className="text-white text-2xl hover:text-gray-300 transition" />
+                    </Link>
                 </div>
+
             </div>
         </footer>
     );
