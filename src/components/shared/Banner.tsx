@@ -24,7 +24,7 @@ export default function Banner() {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     return (
-        <section id='about' className="w-screen h-[900px]  relative overflow-x-hidden">
+        <section id='home' className="w-screen h-[900px]  relative overflow-x-hidden">
             <Slider {...sliderSettings}>
                 {sliderImages.map((img, index) => (
                     <div key={index} className="relative w-screen h-[900px]">
